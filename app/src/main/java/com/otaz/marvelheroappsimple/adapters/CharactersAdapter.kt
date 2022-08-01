@@ -30,15 +30,5 @@ class CharactersAdapter(val data: List<Result>, private val context: Context): R
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
         val characters = data[position]
         holder.characterName.text = characters.name
-
-        val image = "${characters.thumbnail.path}/portrait_small.jpg"
-        var requestOptions = RequestOptions ()
-        requestOptions = requestOptions.transform (FitCenter (), RoundedCorners(16))
-
-        GlideApp.with(context)
-            .load(image)
-            .apply(requestOptions)
-            .skipMemoryCache(true)
-            .into(holder.characterImage)
     }
 }
