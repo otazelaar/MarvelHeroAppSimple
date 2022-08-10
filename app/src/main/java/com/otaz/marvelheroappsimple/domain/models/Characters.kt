@@ -1,4 +1,4 @@
-package com.otaz.marvelheroappsimple.models
+package com.otaz.marvelheroappsimple.domain.models
 
 data class Characters(
     val attributionHTML: String,
@@ -7,5 +7,5 @@ data class Characters(
     val copyright: String,
     val `data`: Data,
     val etag: String,
-    val status: String
+    val status: String,
 )

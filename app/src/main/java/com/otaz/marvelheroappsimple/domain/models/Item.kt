@@ -1,4 +1,4 @@
-package com.otaz.marvelheroappsimple.models
+package com.otaz.marvelheroappsimple.domain.models
 
 data class Item(
     val name: String,

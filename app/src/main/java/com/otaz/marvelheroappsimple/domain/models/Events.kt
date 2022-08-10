@@ -1,6 +1,6 @@
-package com.otaz.marvelheroappsimple.models
+package com.otaz.marvelheroappsimple.domain.models
 
-data class Comics(
+data class Events(
     val available: Int,
     val collectionURI: String,
     val items: List<Item>,

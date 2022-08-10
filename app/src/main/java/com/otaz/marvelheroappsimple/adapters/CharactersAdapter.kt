@@ -2,33 +2,33 @@ package com.otaz.marvelheroappsimple.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.RoundedCorner
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.FitCenter
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
-import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.glide.GlideApp
-import com.otaz.marvelheroappsimple.viewholders.CharactersViewHolder
-import com.otaz.marvelheroappsimple.models.Result
+import com.otaz.marvelheroappsimple.databinding.ItemCharactersLayoutBinding
+import com.otaz.marvelheroappsimple.domain.models.Characters
+import com.otaz.marvelheroappsimple.domain.models.Result
+import retrofit2.Callback
 
-class CharactersAdapter(val data: List<Result>, private val context: Context): RecyclerView.Adapter<CharactersViewHolder>() {
+/**
+ * Binds Character data object to a ViewHolder
+ */
+class CharactersAdapter(var data: List<Result>, private val context: Context): RecyclerView.Adapter<CharactersAdapter.CharactersViewHolder>() {
+
+    inner class CharactersViewHolder(val binding: ItemCharactersLayoutBinding): RecyclerView.ViewHolder(binding.root) {}
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_characters_layout,
-            parent, false
-        )
-        return CharactersViewHolder(itemView)
+        return CharactersViewHolder(ItemCharactersLayoutBinding.inflate(
+            LayoutInflater.from(parent.context)))
     }
 
-    override fun getItemCount(): Int {
-        return data.size
+    override fun onBindViewHolder(viewHolder: CharactersViewHolder, position: Int) {
+        viewHolder.binding.apply {
+            val characters = data[position]
+            characterName.text = characters.name
+        }
     }
 
-    override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
-        val characters = data[position]
-        holder.characterName.text = characters.name
-    }
+    override fun getItemCount() = data.size
 }

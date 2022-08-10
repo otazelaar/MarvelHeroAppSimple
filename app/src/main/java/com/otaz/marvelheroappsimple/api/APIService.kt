@@ -1,20 +1,15 @@
 package com.otaz.marvelheroappsimple.api
 
-import com.otaz.marvelheroappsimple.utils.constants
+import com.otaz.marvelheroappsimple.common.constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object APIService {
-    val instance: Marvel
-
-    init {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(constants.API_BASE_URL)
+    val api: Marvel by lazy{
+        Retrofit.Builder()
+            .baseUrl(constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        instance = retrofit.create(Marvel::class.java)
+            .create(Marvel::class.java)
     }
-
-
 }

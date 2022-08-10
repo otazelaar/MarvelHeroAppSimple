@@ -2,15 +2,24 @@
     <string name="app_name">MarvelHeroAppSimple</string>
 
     <!-- Strings used for fragments for navigation -->
-    <string name="hero_list_fragment_label">HeroListViewFragment</string>
+    <string name="character_list_fragment_label">CharacterListViewFragment</string>
+    <string name="character_fragment_label">CharacterViewFragment</string>
+
 
     <string name="title">Title</string>
 
-    <!-- Hero List -->
+    <!-- Character List -->
     <string name="hero_list_header">Heroes</string>
     <string name="logo_description">Marvel Cinematic Universe icon</string>
+    <string name="character_list_header">Character</string>
+    <string name="character_loading_error">Error loading characters. Please try again later.</string>
 
     <!-- Search Bar -->
     <string name="search_button_description">Search Button</string>
     <string name="search_bar_placeholder">Search (ex: "Iron Man")</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Character View -->
+    <string name="character_image_description">Image for character</string>
 </resources>

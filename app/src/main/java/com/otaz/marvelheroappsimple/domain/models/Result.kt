@@ -1,4 +1,4 @@
-package com.otaz.marvelheroappsimple.models
+package com.otaz.marvelheroappsimple.domain.models
 
 data class Result(
     val comics: Comics,
