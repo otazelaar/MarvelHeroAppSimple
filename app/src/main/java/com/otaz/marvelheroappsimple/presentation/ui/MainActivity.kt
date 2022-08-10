@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        BIG BUTT HOLE
+
         recyclerView = binding.idHeroList
         binding.idProgressBar.visibility = View.VISIBLE
         recyclerView.layoutManager = LinearLayoutManager(this)
