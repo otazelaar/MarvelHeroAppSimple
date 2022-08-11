@@ -1,4 +1,4 @@
-package com.otaz.marvelheroappsimple.domain.models
+package com.otaz.marvelheroappsimple.data.remote.dto
 
 data class ItemXXX(
     val name: String,

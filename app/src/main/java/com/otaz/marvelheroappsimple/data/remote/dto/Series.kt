@@ -1,6 +1,6 @@
-package com.otaz.marvelheroappsimple.domain.models
+package com.otaz.marvelheroappsimple.data.remote.dto
 
-data class Comics(
+data class Series(
     val available: Int,
     val collectionURI: String,
     val items: List<Item>,

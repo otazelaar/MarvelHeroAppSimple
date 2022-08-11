@@ -3,13 +3,10 @@ package com.otaz.marvelheroappsimple.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.otaz.marvelheroappsimple.data.remote.dto.MarvelDto
 import com.otaz.marvelheroappsimple.databinding.ItemCharactersLayoutBinding
-import com.otaz.marvelheroappsimple.domain.models.Characters
-import com.otaz.marvelheroappsimple.domain.models.Result
-import retrofit2.Callback
+import com.otaz.marvelheroappsimple.data.remote.dto.Result
 
 /**
  * Binds Character data object to a ViewHolder

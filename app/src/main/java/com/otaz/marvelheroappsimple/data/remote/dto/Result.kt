@@ -1,4 +1,6 @@
-package com.otaz.marvelheroappsimple.domain.models
+package com.otaz.marvelheroappsimple.data.remote.dto
+
+import com.otaz.marvelheroappsimple.domain.model.ResultData
 
 data class Result(
     val comics: Comics,
@@ -13,3 +15,12 @@ data class Result(
     val thumbnail: Thumbnail,
     val urls: List<Url>
 )
+
+fun Result.toResultData(): ResultData {
+    return ResultData(
+        comics = comics,
+        description = description,
+        id = id,
+        name = name,
+    )
+}

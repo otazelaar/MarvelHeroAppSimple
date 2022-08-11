@@ -1,13 +1,12 @@
-package com.otaz.marvelheroappsimple.api
+package com.otaz.marvelheroappsimple.data.remote
 
-import com.otaz.marvelheroappsimple.domain.models.Characters
-import com.otaz.marvelheroappsimple.domain.models.Result
+import com.otaz.marvelheroappsimple.data.remote.dto.MarvelDto
+import com.otaz.marvelheroappsimple.data.remote.dto.Result
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface Marvel {
+interface MarvelApi {
     /**
      * Return the list of characters
      */
@@ -17,18 +16,18 @@ interface Marvel {
         @Query("ts") ts: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
-    ): Call<Characters>
+    ): List<MarvelDto>
 
     /**
      * Return the list of comics of a specific character
      */
     @GET("characters")
-    fun getCharacterComics(
+    suspend fun getComicsByID(
         @Query("characterID") id: Int,
         @Query("comics") comics: String,
         @Query("limit") limit: Int,
         @Query("ts") ts: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
-    ): Call<Characters>
+    ): List<MarvelDto>
 }
