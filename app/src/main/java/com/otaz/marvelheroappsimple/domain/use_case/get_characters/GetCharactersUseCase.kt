@@ -1,9 +1,9 @@
 package com.otaz.marvelheroappsimple.domain.use_case.get_characters
 
 import com.otaz.marvelheroappsimple.common.Resource
-import com.otaz.marvelheroappsimple.data.remote.dto.MarvelDto
-import com.otaz.marvelheroappsimple.data.remote.dto.toMarvelData
-import com.otaz.marvelheroappsimple.domain.model.MarvelData
+import com.otaz.marvelheroappsimple.data.remote.dto.Result
+import com.otaz.marvelheroappsimple.data.remote.dto.toResultData
+import com.otaz.marvelheroappsimple.domain.model.ResultData
 import com.otaz.marvelheroappsimple.domain.repository.CharacterRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,15 +14,15 @@ import javax.inject.Inject
 class GetCharactersUseCase @Inject constructor(
     private val repository: CharacterRepository
 ){
-    operator fun invoke(): Flow<Resource<List<MarvelData>>> = flow {
+    operator fun invoke(): Flow<Resource<ResultData>> = flow {
         try {
-            emit(Resource.Loading())
-            val result = repository.getCharacters().map { it.toMarvelData() }
-            emit(Resource.Success(MarvelData))
+            emit(Resource.Loading<ResultData>())
+            val characters = repository.getCharacters().map { it.toResultData() }
+            emit(Resource.Success<ResultData>(characters))
         } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+            emit(Resource.Error<ResultData>(e.localizedMessage ?: "An unexpected error occurred"))
         } catch (e: IOException) {
-
+            emit(Resource.Error<ResultData>("Couldn't reach server. Check your internet connection"))
         }
     }
 }

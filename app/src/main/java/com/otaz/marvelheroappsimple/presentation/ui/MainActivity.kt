@@ -1,48 +1,44 @@
 package com.otaz.marvelheroappsimple.presentation.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
-import com.otaz.marvelheroappsimple.api.APIService
-import com.otaz.marvelheroappsimple.common.Constants.Companion.API_KEY
-import com.otaz.marvelheroappsimple.common.Constants.Companion.COMICS
-import com.otaz.marvelheroappsimple.common.Constants.Companion.hash
-import com.otaz.marvelheroappsimple.common.Constants.Companion.limit
-import com.otaz.marvelheroappsimple.common.Constants.Companion.timeStamp
-import com.otaz.marvelheroappsimple.data.remote.dto.Data
-import com.otaz.marvelheroappsimple.data.remote.dto.MarvelDto
-import com.otaz.marvelheroappsimple.data.remote.dto.Result
-import com.otaz.marvelheroappsimple.databinding.ActivityMainBinding
-import retrofit2.*
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.otaz.marvelheroappsimple.presentation.character_list.CharacterListScreen
+import com.otaz.marvelheroappsimple.presentation.comic_list.ComicListScreen
+import com.otaz.marvelheroappsimple.presentation.ui.theme.MarvelHeroAppSimpleTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var recyclerView: RecyclerView
-
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContent {
+            MarvelHeroAppSimpleTheme{
+                Surface(color = MaterialTheme.colors.background) {
 
-        recyclerView = binding.idHeroList
-        binding.idProgressBar.visibility = View.VISIBLE
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        APIService.api.getCharacters(1011334, COMICS ,limit, timeStamp, API_KEY, hash())
-            .enqueue(object : Callback<MarvelDto> {
-                override fun onFailure(call: Call<MarvelDto>, t: Throwable) {
-                    binding.idProgressBar.visibility = View.GONE
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.CharacterListScreen.route
+                    ) {
+                        composable(
+                            route = Screen.CharacterListScreen.route
+                        ) {
+                            CharacterListScreen(navController)
+                        }
+                        composable(
+                            route = Screen.ComicListScreen.route + "/{charID}"
+                        ) {
+                            ComicListScreen()
+                        }
+                    }
                 }
-
-                override fun onResponse(call: Call<MarvelDto>, response: Response<MarvelDto>) {
-                    recyclerView.adapter =
-                        CharactersAdapter(response.body()!!.data.results, this@MainActivity)
-                    binding.idProgressBar.visibility = View.GONE
-                }
-
-            })
+            }
+        }
     }
 }

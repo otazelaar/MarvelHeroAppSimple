@@ -11,7 +11,9 @@ class Constants {
         private const val KEY_PRIVATE = "537a1695943787966388d85726ba6572e8556f0e"
         const val HASH = "5363be808595fac13b89e36865b0962c"
         const val limit = 100
+        const val CHARID = "1011334"
         const val COMICS = "comics"
+        const val PARAM_CHAR_ID = "charID"
 
         fun hash(): String{
             val input = "$timeStamp$KEY_PRIVATE$API_KEY"

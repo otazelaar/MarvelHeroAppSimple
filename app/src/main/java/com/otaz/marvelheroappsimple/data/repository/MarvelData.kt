@@ -27,10 +27,7 @@ data class ThumbnailData(
 )
 
 data class ComicsData(
-    val available: Int,
-    val collectionURI: String,
     val items: List<Item>,
-    val returned: Int
 )
 
 data class ItemData(

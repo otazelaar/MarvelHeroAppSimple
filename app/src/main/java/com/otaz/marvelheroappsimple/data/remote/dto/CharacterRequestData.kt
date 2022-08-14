@@ -1,7 +1,5 @@
 package com.otaz.marvelheroappsimple.data.remote.dto
 
-data class ItemXXX(
+data class CharacterData (
     val name: String,
-    val resourceURI: String,
-    val type: String
 )
