@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.otaz.marvelheroappsimple.common.Resource
+import com.otaz.marvelheroappsimple.data.remote.dto.CharacterRequestData
 import com.otaz.marvelheroappsimple.domain.use_case.get_characters.GetCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

@@ -11,22 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
-import com.otaz.marvelheroappsimple.domain.model.ResultData
+import com.otaz.marvelheroappsimple.data.remote.dto.CharacterRequestData
 
 @Composable
 fun CharacterListItem(
-    character: ResultData,
-    onItemClick: (ResultData) -> Unit
+    character: CharacterRequestData,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onItemClick(character) }
             .padding(20.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = character.name,
+            text = character.status,
             style = MaterialTheme.typography.body1,
             overflow = Ellipsis
         )

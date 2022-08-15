@@ -16,7 +16,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.otaz.marvelheroappsimple.presentation.ui.Screen
 import com.otaz.marvelheroappsimple.presentation.character_list.components.CharacterListItem
 
 @Composable
@@ -30,9 +29,6 @@ fun CharacterListScreen(
             items(state.characters) { character ->
                 CharacterListItem(
                     character = character,
-                    onItemClick = {
-                        navController.navigate(Screen.ComicListScreen.route + "/${character.id}")
-                    }
                 )
             }
         }

@@ -1,9 +1,9 @@
 package com.otaz.marvelheroappsimple.presentation.character_list
 
-import com.otaz.marvelheroappsimple.domain.model.ResultData
+import com.otaz.marvelheroappsimple.data.remote.dto.CharacterRequestData
 
 data class CharacterListState(
     val isLoading: Boolean = false,
-    val characters: List<ResultData> = emptyList(),
+    val characters: List<CharacterRequestData> = emptyList(),
     val error: String = ""
 )

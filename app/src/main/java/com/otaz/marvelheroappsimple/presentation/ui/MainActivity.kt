@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.otaz.marvelheroappsimple.presentation.character_list.CharacterListScreen
-import com.otaz.marvelheroappsimple.presentation.comic_list.ComicListScreen
 import com.otaz.marvelheroappsimple.presentation.ui.theme.MarvelHeroAppSimpleTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,11 +29,6 @@ class MainActivity : ComponentActivity() {
                             route = Screen.CharacterListScreen.route
                         ) {
                             CharacterListScreen(navController)
-                        }
-                        composable(
-                            route = Screen.ComicListScreen.route + "/{charID}"
-                        ) {
-                            ComicListScreen()
                         }
                     }
                 }
