@@ -12,9 +12,12 @@ import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.api.APIService
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.models.JsonCharComRequest
+import com.otaz.marvelheroappsimple.models.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.models.JsonComicRequest
+import com.otaz.marvelheroappsimple.utils.constants
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.utils.constants.Companion.CHARID
+import com.otaz.marvelheroappsimple.utils.constants.Companion.HASH
 import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
@@ -34,17 +37,19 @@ class MainActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        //API call for all comics
-        APIService.instance.getComics(LIMIT, TIMESTAMP, API_KEY, hash())
-            .enqueue(object : Callback<JsonComicRequest> {
-                override fun onFailure(call: Call<JsonComicRequest>, t: Throwable) {
+
+        APIService.instance.getCharacters(limit = 100, TIMESTAMP, API_KEY, hash())
+            .enqueue(object : Callback<JsonCharacterRequest> {
+                override fun onFailure(call: Call<JsonCharacterRequest>, t: Throwable) {
                     progressBar.visibility = View.GONE
-                    Log.e(TAG, "Unsuccessful Response")
-                }
-                override fun onResponse(call: Call<JsonComicRequest>, response: Response<JsonComicRequest>) {
-                    recyclerView.adapter =
-                        ComicsAdapter(response.body()!!.data.results, this@MainActivity)
                     Log.e(TAG, "Successful Response")
+                }
+
+                override fun onResponse(call: Call<JsonCharacterRequest>, response: Response<JsonCharacterRequest>) {
+                    recyclerView.adapter =
+                        CharactersAdapter(response.body()!!.data.results, this@MainActivity)
+                    progressBar.visibility = View.GONE
+                    Log.i(TAG, "Successful Response")
                 }
             })
     }

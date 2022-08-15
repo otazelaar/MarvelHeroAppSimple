@@ -17,8 +17,8 @@ class constants {
 
         fun hash():String{
             val input = "$TIMESTAMP$API_KEY_PRIVATE$API_KEY"
-            val md5Digest = MessageDigest.getInstance("MD5")
-            return BigInteger(1,md5Digest.digest(input.toByteArray())).toString()
+            val md = MessageDigest.getInstance("MD5")
+            return BigInteger(1,md.digest(input.toByteArray())).toString(16).padStart(32,'0')
         }
     }
 }

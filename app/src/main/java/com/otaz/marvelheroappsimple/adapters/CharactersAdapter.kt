@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
+import com.otaz.marvelheroappsimple.models.JsonCharacterResults
 import com.otaz.marvelheroappsimple.models.JsonComicResults
 import com.otaz.marvelheroappsimple.viewholders.CharactersViewHolder
 
-class CharactersAdapter(val data: List<JsonComicResults>, private val context: Context): RecyclerView.Adapter<CharactersViewHolder>() {
+class CharactersAdapter(val data: List<JsonCharacterResults>, private val context: Context): RecyclerView.Adapter<CharactersViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.item_characters_layout,
@@ -23,6 +24,6 @@ class CharactersAdapter(val data: List<JsonComicResults>, private val context: C
 
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
         val characters = data[position]
-        holder.characterName.text = characters.title
+        holder.characterName.text = characters.name
     }
 }
