@@ -10,14 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.api.APIService
-import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
-import com.otaz.marvelheroappsimple.models.JsonCharComRequest
-import com.otaz.marvelheroappsimple.models.JsonCharacterRequest
-import com.otaz.marvelheroappsimple.models.JsonComicRequest
-import com.otaz.marvelheroappsimple.utils.constants
+import com.otaz.marvelheroappsimple.data.remote.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
-import com.otaz.marvelheroappsimple.utils.constants.Companion.CHARID
-import com.otaz.marvelheroappsimple.utils.constants.Companion.HASH
 import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
@@ -38,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
 
-        APIService.instance.getCharacters(limit = 100, TIMESTAMP, API_KEY, hash())
+        APIService.instance.getCharacters(LIMIT, TIMESTAMP, API_KEY, hash())
             .enqueue(object : Callback<JsonCharacterRequest> {
                 override fun onFailure(call: Call<JsonCharacterRequest>, t: Throwable) {
                     progressBar.visibility = View.GONE

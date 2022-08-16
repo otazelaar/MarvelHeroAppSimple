@@ -5,8 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.models.JsonCharComResults
-import com.otaz.marvelheroappsimple.models.JsonComicResults
+import com.otaz.marvelheroappsimple.data.remote.JsonComicResults
 import com.otaz.marvelheroappsimple.viewholders.CharactersViewHolder
 
 class ComicsAdapter(val data: List<JsonComicResults>, private val context: Context): RecyclerView.Adapter<CharactersViewHolder>() {

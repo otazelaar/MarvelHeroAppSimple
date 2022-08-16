@@ -1,4 +1,4 @@
-package com.otaz.marvelheroappsimple.models
+package com.otaz.marvelheroappsimple.data.remote
 
 data class JsonCharComRequest(
     val `data`: JsonCharComData,
