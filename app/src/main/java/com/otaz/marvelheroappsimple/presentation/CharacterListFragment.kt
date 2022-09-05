@@ -29,7 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CharacterListFragment : Fragment(), CharactersAdapter.OnItemClickListener {
+class CharacterListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var data: List<JsonCharacterResults>
@@ -78,7 +78,8 @@ class CharacterListFragment : Fragment(), CharactersAdapter.OnItemClickListener 
                         responseBody.data.results,
                         object : CharactersAdapter.OnItemClickListener {
                             override fun onItemClick(position: Int) {
-                                // Do something with the click here.
+                                Toast.makeText(context, "Item $position clicked", Toast.LENGTH_SHORT).show()
+
                             }
                         },
                         this@CharacterListFragment
@@ -89,11 +90,5 @@ class CharacterListFragment : Fragment(), CharactersAdapter.OnItemClickListener 
                     Log.i(TAG, "Successful Response")
                 }
             })
-    }
-
-    override fun onItemClick(position: Int) {
-        Toast.makeText(context, "Item $position clicked", Toast.LENGTH_SHORT).show()
-        val clickedItem = data[position]
-        Log.i(TAG,"Item ${clickedItem.name} at position $position with id ${clickedItem.id} was clicked")
     }
 }
