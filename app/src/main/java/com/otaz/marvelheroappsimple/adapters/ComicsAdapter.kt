@@ -1,28 +1,28 @@
 package com.otaz.marvelheroappsimple.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.data.remote.JsonComicResults
-import com.otaz.marvelheroappsimple.viewholders.CharactersViewHolder
+import com.otaz.marvelheroappsimple.data.remote.JsonCharComResults
+import com.otaz.marvelheroappsimple.presentation.CharacterDetailFragment
+import com.otaz.marvelheroappsimple.viewholders.ComicsViewHolder
 
-class ComicsAdapter(val data: List<JsonComicResults>, private val context: Context): RecyclerView.Adapter<CharactersViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
+class ComicsAdapter(val data: List<JsonCharComResults>, private val context: CharacterDetailFragment): RecyclerView.Adapter<ComicsViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.item_characters_layout,
+            R.layout.list_item_comic,
             parent, false
         )
-        return CharactersViewHolder(itemView)
+        return ComicsViewHolder(itemView)
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
 
-    override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ComicsViewHolder, position: Int) {
         val comics = data[position]
-        holder.characterName.text = comics.description
+        holder.charComTitle.text = comics.title
     }
 }

@@ -13,3 +13,4 @@ data class JsonCharacterResults(
     val name: String,
     val description: String,
 )
+
