@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,16 +45,7 @@ class CharacterListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_character_list, container, false)
-        val bt = v.findViewById<ImageButton>(R.id.idSearchButton)
-        bt.setOnClickListener {
-            val characterDetailFragment = CharacterDetailFragment()
-            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.mainLayout, characterDetailFragment)
-            transaction.commit()
-        }
-        return v
+        return inflater.inflate(R.layout.fragment_character_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -73,22 +66,28 @@ class CharacterListFragment : Fragment() {
 
                 override fun onResponse(call: Call<JsonCharacterRequest>, response: Response<JsonCharacterRequest>) {
                     val responseBody = response.body()!!
+                    charactersAdapter = CharactersAdapter(responseBody.data.results, this@CharacterListFragment)
 
-                    charactersAdapter = CharactersAdapter(
-                        responseBody.data.results,
-                        object : CharactersAdapter.OnItemClickListener {
-                            override fun onItemClick(position: Int) {
-                                Toast.makeText(context, "Item $position clicked", Toast.LENGTH_SHORT).show()
-
-                            }
-                        },
-                        this@CharacterListFragment
-                    )
-
-                    recyclerView.adapter = charactersAdapter
+                    setUpRecyclerAdapter(charactersAdapter)
 
                     Log.i(TAG, "Successful Response")
                 }
             })
+    }
+
+    fun setUpRecyclerAdapter(charactersAdapter: CharactersAdapter) {
+        recyclerView.adapter = charactersAdapter
+
+        charactersAdapter.onItemClick = { jsonCharacterResults ->
+
+            // do something with your item
+            Log.d("TAG", jsonCharacterResults.name)
+            Toast.makeText(context, "Item clicked", Toast.LENGTH_SHORT).show()
+
+            val characterDetailFragment = CharacterDetailFragment()
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.mainLayout, characterDetailFragment)
+            transaction.commit()
+        }
     }
 }
