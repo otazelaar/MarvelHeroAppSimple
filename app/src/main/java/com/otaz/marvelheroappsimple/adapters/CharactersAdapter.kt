@@ -18,10 +18,12 @@ import com.otaz.marvelheroappsimple.presentation.CharacterListFragment
 
 class CharactersAdapter(
     val data: List<JsonCharacterResults>,
-    private val listener: OnItemClickListener,
     private val context: CharacterListFragment
 ):
     RecyclerView.Adapter<CharactersAdapter.CharactersViewHolder>() {
+
+    var onItemClick: ((JsonCharacterResults) -> Unit)? = null
+    var jsonCharacterResults: List<JsonCharacterResults> = data
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -38,23 +40,13 @@ class CharactersAdapter(
 
     override fun getItemCount() = data.size
 
-    inner class CharactersViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
-        View.OnClickListener{
+    inner class CharactersViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val characterName: TextView = itemView.findViewById(R.id.tvCharacterName)
 
         init {
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onItemClick(position)
+            itemView.setOnClickListener {
+                onItemClick?.invoke(jsonCharacterResults[adapterPosition])
             }
         }
-    }
-
-    interface OnItemClickListener {
-        fun onItemClick(position: Int)
     }
 }

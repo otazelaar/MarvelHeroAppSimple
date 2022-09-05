@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +31,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CharacterListFragment : Fragment(), CharactersAdapter.OnItemClickListener {
+class CharacterListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var data: List<JsonCharacterResults>
@@ -73,23 +75,23 @@ class CharacterListFragment : Fragment(), CharactersAdapter.OnItemClickListener 
 
                 override fun onResponse(call: Call<JsonCharacterRequest>, response: Response<JsonCharacterRequest>) {
                     val responseBody = response.body()!!
+                    charactersAdapter = CharactersAdapter(responseBody.data.results, this@CharacterListFragment)
 
-                    charactersAdapter = CharactersAdapter(
-                        responseBody.data.results,
-                        CharactersAdapter.OnItemClickListener,
-                        this@CharacterListFragment
-                    )
-
-                    recyclerView.adapter = charactersAdapter
+                    setUpRecyclerAdapter(charactersAdapter)
 
                     Log.i(TAG, "Successful Response")
                 }
             })
     }
 
-    override fun onItemClick(position: Int) {
-        Toast.makeText(context, "Item $position clicked", Toast.LENGTH_SHORT).show()
-        val clickedItem = data[position]
-        Log.i(TAG,"Item ${clickedItem.name} at position $position with id ${clickedItem.id} was clicked")
+    fun setUpRecyclerAdapter(charactersAdapter: CharactersAdapter) {
+        recyclerView.adapter = charactersAdapter
+
+        charactersAdapter.onItemClick = { jsonCharacterResults ->
+
+            // do something with your item
+            Log.d("TAG", jsonCharacterResults.name)
+            Toast.makeText(context, "Item clicked", Toast.LENGTH_SHORT).show()
+        }
     }
 }
