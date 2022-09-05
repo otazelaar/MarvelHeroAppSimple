@@ -45,16 +45,7 @@ class CharacterListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_character_list, container, false)
-        val bt = v.findViewById<ImageButton>(R.id.idSearchButton)
-        bt.setOnClickListener {
-            val characterDetailFragment = CharacterDetailFragment()
-            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.mainLayout, characterDetailFragment)
-            transaction.commit()
-        }
-        return v
+        return inflater.inflate(R.layout.fragment_character_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,6 +83,11 @@ class CharacterListFragment : Fragment() {
             // do something with your item
             Log.d("TAG", jsonCharacterResults.name)
             Toast.makeText(context, "Item clicked", Toast.LENGTH_SHORT).show()
+
+            val characterDetailFragment = CharacterDetailFragment()
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.mainLayout, characterDetailFragment)
+            transaction.commit()
         }
     }
 }
