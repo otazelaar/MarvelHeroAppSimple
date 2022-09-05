@@ -76,7 +76,11 @@ class CharacterListFragment : Fragment(), CharactersAdapter.OnItemClickListener 
 
                     charactersAdapter = CharactersAdapter(
                         responseBody.data.results,
-                        CharactersAdapter.OnItemClickListener,
+                        object : CharactersAdapter.OnItemClickListener {
+                            override fun onItemClick(position: Int) {
+                                // Do something with the click here.
+                            }
+                        },
                         this@CharacterListFragment
                     )
 
