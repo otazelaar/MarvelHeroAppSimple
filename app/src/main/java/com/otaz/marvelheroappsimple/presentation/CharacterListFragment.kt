@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
+import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.api.APIService
 import com.otaz.marvelheroappsimple.data.remote.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.data.remote.JsonCharacterResults
@@ -34,7 +35,6 @@ import retrofit2.Response
 class CharacterListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var data: List<JsonCharacterResults>
     lateinit var charactersAdapter: CharactersAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,14 +50,13 @@ class CharacterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         recyclerView = view.findViewById(R.id.rvCharacterList)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        getMyData()
+        getRvData()
     }
 
-    private fun getMyData() {
+    private fun getRvData() {
         APIService.instance.getCharacters(LIMIT, TIMESTAMP, API_KEY, hash())
             .enqueue(object : Callback<JsonCharacterRequest> {
                 override fun onFailure(call: Call<JsonCharacterRequest>, t: Throwable) {
@@ -65,12 +64,13 @@ class CharacterListFragment : Fragment() {
                 }
 
                 override fun onResponse(call: Call<JsonCharacterRequest>, response: Response<JsonCharacterRequest>) {
-                    val responseBody = response.body()!!
-                    charactersAdapter = CharactersAdapter(responseBody.data.results, this@CharacterListFragment)
+                    response.body()?.let { responseBody ->
+                        charactersAdapter =
+                            CharactersAdapter(responseBody.data.results, this@CharacterListFragment)
+                        setUpRecyclerAdapter(charactersAdapter)
 
-                    setUpRecyclerAdapter(charactersAdapter)
-
-                    Log.i(TAG, "Successful Response")
+                        Log.i(TAG, "Successful 'JsonCharacterRequest' Response")
+                    }
                 }
             })
     }
@@ -82,7 +82,7 @@ class CharacterListFragment : Fragment() {
 
             // do something with your item
             Log.d("TAG", jsonCharacterResults.name)
-            Toast.makeText(context, "Item clicked", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Item ${jsonCharacterResults.id} clicked", Toast.LENGTH_SHORT).show()
 
             val characterDetailFragment = CharacterDetailFragment()
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
