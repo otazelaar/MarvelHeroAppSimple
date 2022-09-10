@@ -84,20 +84,19 @@ class CharacterListFragment : Fragment() {
         recyclerView.adapter = charactersAdapter
 
         charactersAdapter.onItemClick = { jsonCharacterResults ->
-
-            // do something with your item
-            Log.d("TAG", "'${jsonCharacterResults.name}' was clicked with ID: ${jsonCharacterResults.id}")
-            Toast.makeText(context, "You clicked '${jsonCharacterResults.name}' with ID: ${jsonCharacterResults.id}", Toast.LENGTH_SHORT).show()
-
-            //B
+            // Passes character ID to CharacterDetailFragment so that it can be used to make API call
             val specificCharID = jsonCharacterResults.id
             val result = specificCharID.toString()
             setFragmentResult("requestKey", bundleOf("bundleKey" to result))
 
+            // Navigate to next fragment
             val characterDetailFragment = CharacterDetailFragment()
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
             transaction.replace(R.id.mainLayout, characterDetailFragment)
             transaction.commit()
+
+            Log.d("TAG", "'${jsonCharacterResults.name}' was clicked with ID: ${jsonCharacterResults.id}")
+            Toast.makeText(context, "You clicked '${jsonCharacterResults.name}' with ID: ${jsonCharacterResults.id}", Toast.LENGTH_SHORT).show()
         }
     }
 }
