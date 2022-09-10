@@ -2,6 +2,7 @@ package com.otaz.marvelheroappsimple.presentation
 
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
@@ -14,14 +15,18 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.api.APIService
+import com.otaz.marvelheroappsimple.data.remote.JsonCharComResults
 import com.otaz.marvelheroappsimple.data.remote.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.data.remote.JsonCharacterResults
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
@@ -81,8 +86,13 @@ class CharacterListFragment : Fragment() {
         charactersAdapter.onItemClick = { jsonCharacterResults ->
 
             // do something with your item
-            Log.d("TAG", jsonCharacterResults.name)
-            Toast.makeText(context, "Item ${jsonCharacterResults.id} clicked", Toast.LENGTH_SHORT).show()
+            Log.d("TAG", "'${jsonCharacterResults.name}' was clicked with ID: ${jsonCharacterResults.id}")
+            Toast.makeText(context, "You clicked '${jsonCharacterResults.name}' with ID: ${jsonCharacterResults.id}", Toast.LENGTH_SHORT).show()
+
+            //B
+            val specificCharID = jsonCharacterResults.id
+            val result = specificCharID.toString()
+            setFragmentResult("requestKey", bundleOf("bundleKey" to result))
 
             val characterDetailFragment = CharacterDetailFragment()
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()

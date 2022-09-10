@@ -12,7 +12,7 @@
         android:id="@+id/ivMarvelStudiosText"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="141dp"
         android:adjustViewBounds="false"
         android:contentDescription="@string/logo_description"
         android:src="@drawable/mcu_logo_2"
