@@ -26,17 +26,11 @@ class ComicsAdapter(
     override fun onBindViewHolder(holder: ComicsViewHolder, position: Int) {
         val comics = data[position]
         holder.charComTitle.text = comics.title
-
-        // Attempting to display this data always crashes the program when the CharacterDetailFragment tries to load
-        holder.charComDescription.text = comics.description
     }
 
     override fun getItemCount() = data.size
 
     inner class ComicsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val charComTitle: TextView = itemView.findViewById(R.id.tvCharComicTitle)
-
-        // Attempting to display this data always crashes the program when the CharacterDetailFragment tries to load
-        val charComDescription: TextView = itemView.findViewById(R.id.tvCharacterDescription)
     }
 }
