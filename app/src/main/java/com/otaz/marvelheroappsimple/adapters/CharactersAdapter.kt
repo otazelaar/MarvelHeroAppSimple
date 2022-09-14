@@ -17,8 +17,7 @@ import com.otaz.marvelheroappsimple.presentation.CharacterListFragment
  */
 
 class CharactersAdapter(
-    val data: List<JsonCharacterResults>,
-    private val context: CharacterListFragment
+    val data: List<JsonCharacterResults>
 ):
     RecyclerView.Adapter<CharactersAdapter.CharactersViewHolder>() {
 

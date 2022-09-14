@@ -13,6 +13,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.annotation.Nullable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.os.bundleOf
@@ -55,6 +56,7 @@ class CharacterListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         recyclerView = view.findViewById(R.id.rvCharacterList)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -71,7 +73,7 @@ class CharacterListFragment : Fragment() {
                 override fun onResponse(call: Call<JsonCharacterRequest>, response: Response<JsonCharacterRequest>) {
                     response.body()?.let { responseBody ->
                         charactersAdapter =
-                            CharactersAdapter(responseBody.data.results, this@CharacterListFragment)
+                            CharactersAdapter(responseBody.data.results)
                         setUpRecyclerAdapter(charactersAdapter)
 
                         Log.i(TAG, "Successful 'JsonCharacterRequest' Response")

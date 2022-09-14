@@ -11,7 +11,6 @@ import com.otaz.marvelheroappsimple.presentation.CharacterDetailFragment
 
 class ComicsAdapter(
     val data: List<JsonCharComResults>,
-    private val context: CharacterDetailFragment
 ):
     RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
 
