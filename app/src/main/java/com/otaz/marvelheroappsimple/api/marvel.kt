@@ -4,6 +4,7 @@ import com.otaz.marvelheroappsimple.data.remote.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.remote.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.data.remote.JsonComicRequest
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -14,12 +15,12 @@ interface Marvel {
      * Return the list of all characters
      */
     @GET("characters")
-    fun getCharacters(
+    suspend fun getCharacters(
         @Query("limit") limit: Int,
         @Query("ts") ts: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
-    ): Call<JsonCharacterRequest>
+    ): Response<JsonCharacterRequest>
 
     /**
      * Return the list of all comics

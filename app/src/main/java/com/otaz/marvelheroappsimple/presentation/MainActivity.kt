@@ -1,26 +1,9 @@
 package com.otaz.marvelheroappsimple.presentation
 
-import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
-import com.otaz.marvelheroappsimple.api.APIService
-import com.otaz.marvelheroappsimple.data.remote.JsonCharacterRequest
-import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
-import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
-import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
-import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

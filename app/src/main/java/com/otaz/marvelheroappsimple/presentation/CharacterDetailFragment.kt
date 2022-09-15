@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
-import com.otaz.marvelheroappsimple.api.APIService
+import com.otaz.marvelheroappsimple.api.api
 import com.otaz.marvelheroappsimple.data.remote.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.remote.JsonCharComResults
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
@@ -49,7 +49,7 @@ class CharacterDetailFragment : Fragment() {
     }
 
     private fun getRvData(specificCharID: Int) {
-        APIService.instance.getComicsByID(specificCharID, LIMIT, TIMESTAMP, API_KEY, hash())
+        api.instance.getComicsByID(specificCharID, LIMIT, TIMESTAMP, API_KEY, hash())
             .enqueue(object : Callback<JsonCharComRequest> {
                 override fun onFailure(call: Call<JsonCharComRequest>, t: Throwable) {
                     Log.e(TAG, "Unsuccessful 'JsonCharComRequest' Response")
