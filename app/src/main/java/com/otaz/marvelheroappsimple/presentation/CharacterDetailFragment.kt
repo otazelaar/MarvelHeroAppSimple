@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
-import com.otaz.marvelheroappsimple.api.api
-import com.otaz.marvelheroappsimple.data.remote.JsonCharComRequest
-import com.otaz.marvelheroappsimple.data.remote.JsonCharComResults
+import com.otaz.marvelheroappsimple.api.RetrofitInstance
+import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
+import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
@@ -24,7 +24,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CharacterDetailFragment : Fragment() {
+class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     private lateinit var recyclerView: RecyclerView
     lateinit var comicsAdapter: ComicsAdapter
@@ -49,7 +49,7 @@ class CharacterDetailFragment : Fragment() {
     }
 
     private fun getRvData(specificCharID: Int) {
-        api.instance.getComicsByID(specificCharID, LIMIT, TIMESTAMP, API_KEY, hash())
+        RetrofitInstance.api.getComicsByID(specificCharID, LIMIT, TIMESTAMP, API_KEY, hash())
             .enqueue(object : Callback<JsonCharComRequest> {
                 override fun onFailure(call: Call<JsonCharComRequest>, t: Throwable) {
                     Log.e(TAG, "Unsuccessful 'JsonCharComRequest' Response")

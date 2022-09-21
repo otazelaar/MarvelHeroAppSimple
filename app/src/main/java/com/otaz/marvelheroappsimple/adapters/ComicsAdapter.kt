@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.data.remote.JsonCharComResults
-import com.otaz.marvelheroappsimple.presentation.CharacterDetailFragment
+import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
 
 class ComicsAdapter(
     val data: List<JsonCharComResults>,

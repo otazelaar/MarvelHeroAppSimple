@@ -1,8 +1,8 @@
 package com.otaz.marvelheroappsimple.api
 
-import com.otaz.marvelheroappsimple.data.remote.JsonCharComRequest
-import com.otaz.marvelheroappsimple.data.remote.JsonCharacterRequest
-import com.otaz.marvelheroappsimple.data.remote.JsonComicRequest
+import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
+import com.otaz.marvelheroappsimple.data.models.JsonCharacterRequest
+import com.otaz.marvelheroappsimple.data.models.JsonComicRequest
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.GET

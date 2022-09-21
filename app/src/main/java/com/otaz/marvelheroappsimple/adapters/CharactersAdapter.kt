@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.data.remote.JsonCharacterResults
-import com.otaz.marvelheroappsimple.presentation.CharacterListFragment
+import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 
 /**
  * Originally, there was a viewholder but it was merged with the adapter.
