@@ -20,6 +20,7 @@ import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
+import com.otaz.marvelheroappsimple.vm.CharacterViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,19 +30,12 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
     private lateinit var recyclerView: RecyclerView
     lateinit var comicsAdapter: ComicsAdapter
     lateinit var  data: List<JsonCharComResults>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_character_detail, container, false)
-    }
+    lateinit var viewModel: CharacterViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).viewModel
+
         recyclerView = view.findViewById(R.id.rvCharComList)
         recyclerView.layoutManager = LinearLayoutManager(context)
 

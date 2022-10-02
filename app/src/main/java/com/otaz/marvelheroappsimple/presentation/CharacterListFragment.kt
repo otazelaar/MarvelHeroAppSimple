@@ -13,30 +13,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.api.RetrofitInstance
-import com.otaz.marvelheroappsimple.db.CharacterDatabase
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
+import com.otaz.marvelheroappsimple.vm.CharacterViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-
 
 class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var charactersAdapter: CharactersAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_character_list, container, false)
-    }
+    private lateinit var viewModel: CharacterViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = (activity as MainActivity).viewModel
 
         recyclerView = view.findViewById(R.id.rvCharacterList)
         recyclerView.layoutManager = LinearLayoutManager(context)
