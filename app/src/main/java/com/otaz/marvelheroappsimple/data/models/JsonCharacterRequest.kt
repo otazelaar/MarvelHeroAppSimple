@@ -12,11 +12,12 @@ data class JsonCharacterData(
     val results: List<JsonCharacterResults>,
 )
 
-@Entity
+@Entity(
+    tableName = "room_character_results"
+)
 data class JsonCharacterResults(
     @PrimaryKey
     val id: Int,
     val name: String,
     val description: String,
 ) : Serializable
-

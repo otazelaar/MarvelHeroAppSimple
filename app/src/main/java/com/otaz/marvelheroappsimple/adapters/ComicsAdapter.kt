@@ -12,6 +12,7 @@ import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import kotlinx.android.synthetic.main.fragment_character_detail.view.*
 import kotlinx.android.synthetic.main.list_item_character.view.*
+import kotlinx.android.synthetic.main.list_item_comic.view.*
 
 class ComicsAdapter: RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
 
@@ -40,9 +41,7 @@ class ComicsAdapter: RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
     override fun onBindViewHolder(holder: ComicsViewHolder, position: Int) {
         val comics = differ.currentList[position]
         holder.itemView.apply {
-            tvCharacterComics.text = comics.title
-            tvCharacterDescription.text = comics.description
-
+            tvComicName.text = comics.title
             setOnClickListener{
                 onItemClickListener?.let { it(comics) }
             }

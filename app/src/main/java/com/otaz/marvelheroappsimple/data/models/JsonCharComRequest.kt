@@ -12,7 +12,9 @@ data class JsonCharComData(
     val results: List<JsonCharComResults>,
 )
 
-@Entity
+@Entity(
+    tableName = "room_comic_results"
+)
 data class JsonCharComResults(
     @PrimaryKey
     val id: Int,

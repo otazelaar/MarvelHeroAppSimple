@@ -9,6 +9,13 @@ import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 interface CharacterDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(jsonCharacterResults: JsonCharacterResults)
+    suspend fun upsert(jsonCharacterResults: JsonCharacterResults): Long
+
+    @Query("SELECT * FROM room_character_results")
+    fun getAllCharacters(): LiveData<List<JsonCharacterResults>>
+
+    @Delete
+    suspend fun deleteCharacter(jsonCharacterResults: JsonCharacterResults)
+
 
 }

@@ -8,24 +8,11 @@
     android:padding="8dp"
     tools:context=".presentation.CharacterDetailFragment">
 
-    <ImageView
-        android:id="@+id/ivCharacterImage"
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:layout_marginBottom="456dp"
-        android:contentDescription="@string/character_image_description"
-        android:src="@drawable/ic_marvel_team"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/tvCharacterTitleText"
         android:layout_width="397dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:fontFamily="@font/marvel_font"
         android:text="Character Name"
         android:textAlignment="center"
@@ -33,14 +20,15 @@
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivCharacterImage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvComicListHeader"
         android:layout_width="match_parent"
         android:layout_height="35dp"
+        android:gravity="center"
+        android:text="Comics"
         android:textSize="20sp"
-        android:text="List of Comics:"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCharacterTitleText" />
@@ -48,7 +36,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCharComList"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/round_corners"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/tvCharacterDescription"
@@ -59,48 +47,24 @@
 
     <TextView
         android:id="@+id/tvCharacterDescription"
-        android:layout_width="385dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Character Description"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCharacterTitleText" />
+        app:layout_constraintTop_toBottomOf="@+id/rvCharComList" />
 
-    <TextView
-        android:id="@+id/tvCharacterComics"
-        android:layout_width="385dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="List of Comics"
+    <ProgressBar
+        android:id="@+id/pbCharacterDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCharacterDescription" />
-
-    <TextView
-        android:id="@+id/tvCharacterCreators"
-        android:layout_width="385dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="List of Creators"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCharacterComics" />
-
-    <TextView
-        android:id="@+id/tvCharacterOther"
-        android:layout_width="385dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="List of Other information"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCharacterCreators" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

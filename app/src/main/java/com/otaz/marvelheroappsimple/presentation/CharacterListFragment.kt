@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
@@ -26,7 +28,7 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
         charactersAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putSerializable("character", it)
+                putSerializable("charID", it)
             }
             findNavController().navigate(R.id.action_characterListFragment_to_characterDetailFragment,
             bundle

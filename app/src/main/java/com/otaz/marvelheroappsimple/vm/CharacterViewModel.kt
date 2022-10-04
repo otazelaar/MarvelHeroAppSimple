@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterRequest
+import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
@@ -73,4 +74,15 @@ class CharacterViewModel(
         }
         return Resource.Error(response.message())
     }
+
+    fun saveCharacter(jsonCharacterResults: JsonCharacterResults) = viewModelScope.launch {
+        characterRepository.upsert(jsonCharacterResults)
+    }
+
+    fun getSavedCharacters() = characterRepository.getSavedCharacters()
+
+    fun deleteCharacter(jsonCharacterResults: JsonCharacterResults) = viewModelScope.launch {
+        characterRepository.deleteCharacter(jsonCharacterResults)
+    }
+
 }

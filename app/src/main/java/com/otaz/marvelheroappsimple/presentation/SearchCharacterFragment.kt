@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
@@ -34,7 +35,7 @@ class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
 
         charactersAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
-                putSerializable("character", it)
+                putSerializable("charID", it)
             }
             findNavController().navigate(R.id.action_searchCharacterFragment_to_characterDetailFragment,
                 bundle

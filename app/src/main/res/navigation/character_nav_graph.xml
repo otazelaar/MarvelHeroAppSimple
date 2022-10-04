@@ -20,7 +20,7 @@
         android:label="fragment_character_detail"
         tools:layout="@layout/fragment_character_detail" >
         <argument
-            android:name="character"
+            android:name="charID"
             app:argType="com.otaz.marvelheroappsimple.data.models.JsonCharacterResults" />
     </fragment>
     <fragment

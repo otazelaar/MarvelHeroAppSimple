@@ -38,24 +38,12 @@ interface Marvel {
      * Return the list of comics of a specific character *charID*
      */
     @GET("characters/{charID}/comics")
-    fun getComicsByID(
+    suspend fun getComicsByID(
         @Path("charID") charID: Int,
         @Query("limit") limit: Int,
         @Query("ts") ts: String,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
     ): Response<JsonCharComRequest>
-
-    /**
-     * Return the list of all comics
-     */
-    @GET("comics")
-    fun getComics(
-        @Query("limit") limit: Int,
-        @Query("ts") ts: String,
-        @Query("apikey") apikey: String,
-        @Query("hash") hash: String,
-    ): Call<JsonComicRequest>
-
 
 }
