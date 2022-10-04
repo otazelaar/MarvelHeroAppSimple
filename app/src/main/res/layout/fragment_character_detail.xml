@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvComicListHeader"
-        tools:listitem="@layout/list_item_comic" />
+        tools:listitem="@layout/list_item_character" />
 
     <TextView
         android:id="@+id/tvCharacterDescription"

@@ -1,56 +1,72 @@
 package com.otaz.marvelheroappsimple.presentation
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
-import com.otaz.marvelheroappsimple.api.RetrofitInstance
-import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
-import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
-import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
-import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
+import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_character_list.*
 
 class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var charactersAdapter: CharactersAdapter
-    private lateinit var viewModel: CharacterViewModel
+    lateinit var viewModel: CharacterViewModel
+    val TAG = "CharacterListFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
+        setUpRecyclerView()
 
-        recyclerView = view.findViewById(R.id.rvCharacterList)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        charactersAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("character", it)
+            }
+            findNavController().navigate(R.id.action_characterListFragment_to_characterDetailFragment,
+            bundle
+            )
+        }
 
-        crGetRvData()
-    }
-
-    private fun crGetRvData() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            val response = RetrofitInstance.api.getCharacters(LIMIT, TIMESTAMP, API_KEY, hash())
-            if(response.isSuccessful) {
-                for(characters in response.body()!!.data.results) {
-                    response.body()?.let { responseBody ->
-                        charactersAdapter =
-                            CharactersAdapter(responseBody.data.results)
-                        recyclerView.adapter = charactersAdapter
-
-                        Log.i(TAG, "Successful 'JsonCharacterRequest' Response")
+        viewModel.characterList.observe(viewLifecycleOwner, Observer { response ->
+            when(response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let { jsonCharacterRequest ->
+                        charactersAdapter.differ.submitList(jsonCharacterRequest.data.results)
                     }
                 }
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let { message ->
+                        Log.e(TAG, "An error occurred: $message")
+                    }
+                }
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
             }
+        })
+    }
+
+    private fun hideProgressBar() {
+        idProgressBar.visibility = View.INVISIBLE
+    }
+
+    private fun showProgressBar() {
+        idProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun setUpRecyclerView() {
+        charactersAdapter = CharactersAdapter()
+        rvCharacterList.apply {
+            adapter = charactersAdapter
+            layoutManager = LinearLayoutManager(activity)
         }
     }
 }

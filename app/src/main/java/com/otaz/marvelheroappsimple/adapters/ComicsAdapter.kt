@@ -4,14 +4,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
+import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
+import kotlinx.android.synthetic.main.fragment_character_detail.view.*
+import kotlinx.android.synthetic.main.list_item_character.view.*
 
-class ComicsAdapter(
-    val data: List<JsonCharComResults>,
-):
-    RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
+class ComicsAdapter: RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
+
+    inner class ComicsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+
+    private val differCallback = object : DiffUtil.ItemCallback<JsonCharComResults>() {
+        override fun areItemsTheSame(oldItem: JsonCharComResults, newItem: JsonCharComResults): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: JsonCharComResults, newItem: JsonCharComResults): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    val differ = AsyncListDiffer(this, differCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComicsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -22,13 +38,25 @@ class ComicsAdapter(
     }
 
     override fun onBindViewHolder(holder: ComicsViewHolder, position: Int) {
-        val comics = data[position]
-        holder.charComTitle.text = comics.title
+        val comics = differ.currentList[position]
+        holder.itemView.apply {
+            tvCharacterComics.text = comics.title
+            tvCharacterDescription.text = comics.description
+
+            setOnClickListener{
+                onItemClickListener?.let { it(comics) }
+            }
+        }
     }
 
-    override fun getItemCount() = data.size
-
-    inner class ComicsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        val charComTitle: TextView = itemView.findViewById(R.id.tvCharComicTitle)
+    override fun getItemCount(): Int {
+        return differ.currentList.size
     }
+
+    private var onItemClickListener: ((JsonCharComResults) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (JsonCharComResults) -> Unit) {
+        onItemClickListener = listener
+    }
+
 }

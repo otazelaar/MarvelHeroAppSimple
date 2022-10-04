@@ -9,76 +9,74 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
+import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.api.RetrofitInstance
 import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
+import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import kotlinx.android.synthetic.main.fragment_character_detail.*
+import kotlinx.android.synthetic.main.fragment_character_list.*
+import kotlinx.android.synthetic.main.fragment_search_character.*
+import kotlinx.android.synthetic.main.fragment_search_character.idProgressBar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
-    private lateinit var recyclerView: RecyclerView
-    lateinit var comicsAdapter: ComicsAdapter
-    lateinit var  data: List<JsonCharComResults>
     lateinit var viewModel: CharacterViewModel
+    lateinit var comicsAdapter: ComicsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
+        setUpRecyclerView()
 
-        recyclerView = view.findViewById(R.id.rvCharComList)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-
-        setFragmentListener()
-    }
-
-    private fun getRvData(specificCharID: Int) {
-        RetrofitInstance.api.getComicsByID(specificCharID, LIMIT, TIMESTAMP, API_KEY, hash())
-            .enqueue(object : Callback<JsonCharComRequest> {
-                override fun onFailure(call: Call<JsonCharComRequest>, t: Throwable) {
-                    Log.e(TAG, "Unsuccessful 'JsonCharComRequest' Response")
-                }
-
-                override fun onResponse(call: Call<JsonCharComRequest>, response: Response<JsonCharComRequest>) {
-                    val characterDetail = response.body()
-                    characterDetail?.let { responseBody ->
-                        comicsAdapter =
-                            ComicsAdapter(responseBody.data.results)
-                        setUpRecyclerAdapter(comicsAdapter)
-
-                        val tvCharacterDescription = view?.findViewById<TextView>(R.id.tvCharacterDescription)
-                        val results = responseBody.data.results[specificCharID]
-                        results.let {
-                            tvCharacterDescription?.let { it.text = results.description }
-                            // by adding [specificCharID] above, I get access to be able to write results.description
-                            // This makes the app crash and I am not sure why.
-                            // I can't seem to find another way to be able to access the different api results such as...
-                            // id, description, title, etc.
-                        }
-                        Log.i(TAG, "Successful 'JsonCharComRequest' Response")
+        viewModel.comicsByID.observe(viewLifecycleOwner, Observer { response ->
+            when(response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let { jsonCharacterRequest ->
+                        comicsAdapter.differ.submitList(jsonCharacterRequest.data.results)
                     }
                 }
-            })
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.message?.let { message ->
+                        Log.e(TAG, "An error occurred: $message")
+                    }
+                }
+                is Resource.Loading -> {
+                    showProgressBar()
+                }
+            }
+        })
     }
 
-    fun setUpRecyclerAdapter(comicsAdapter: ComicsAdapter) {
-        recyclerView.adapter = comicsAdapter
+    private fun hideProgressBar() {
+        idProgressBar.visibility = View.INVISIBLE
     }
 
-    private fun setFragmentListener() {
-        setFragmentResultListener("requestKey") { requestKey, bundle ->
-            var result = bundle.getString("bundleKey")
-            getRvData(result!!.toInt())
+    private fun showProgressBar() {
+        idProgressBar.visibility = View.VISIBLE
+    }
+
+    private fun setUpRecyclerView() {
+        comicsAdapter = ComicsAdapter()
+        rvCharComList.apply {
+            adapter = comicsAdapter
+            layoutManager = LinearLayoutManager(activity)
         }
     }
 }

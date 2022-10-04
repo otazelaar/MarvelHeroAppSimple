@@ -3,7 +3,8 @@ package com.otaz.marvelheroappsimple.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         val characterRepository = CharacterRepository(CharacterDatabase(this))
         val viewModelProviderFactory = CharacterViewModelProviderFactory(characterRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(CharacterViewModel::class.java)
-        bottomNavigationView.setupWithNavController(characterNavHostFragment.findNavController())
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.characterNavHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        bottomNavigationView.setupWithNavController(navController)
     }
 }

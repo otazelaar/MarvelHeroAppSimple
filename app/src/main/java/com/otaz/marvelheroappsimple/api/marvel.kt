@@ -12,7 +12,7 @@ import retrofit2.http.Query
 interface Marvel {
 
     /**
-     * Return the list of all characters
+     * Return the list of all characters yet the limit is 100
      */
     @GET("characters")
     suspend fun getCharacters(
@@ -21,6 +21,30 @@ interface Marvel {
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
     ): Response<JsonCharacterRequest>
+
+    /**
+     * Returns characters with names that start with the search input
+     */
+    @GET("characters")
+    suspend fun searchForCharacters(
+        @Query("nameStartsWith") nameStartsWith: String,
+        @Query("limit") limit: Int,
+        @Query("ts") ts: String,
+        @Query("apikey") apikey: String,
+        @Query("hash") hash: String,
+    ): Response<JsonCharacterRequest>
+
+    /**
+     * Return the list of comics of a specific character *charID*
+     */
+    @GET("characters/{charID}/comics")
+    fun getComicsByID(
+        @Path("charID") charID: Int,
+        @Query("limit") limit: Int,
+        @Query("ts") ts: String,
+        @Query("apikey") apikey: String,
+        @Query("hash") hash: String,
+    ): Response<JsonCharComRequest>
 
     /**
      * Return the list of all comics
@@ -33,15 +57,5 @@ interface Marvel {
         @Query("hash") hash: String,
     ): Call<JsonComicRequest>
 
-    /**
-     * Return the list of comics of a specific character *charID*
-     */
-    @GET("characters/{charID}/comics")
-    fun getComicsByID(
-        @Path("charID") charID: Int,
-        @Query("limit") limit: Int,
-        @Query("ts") ts: String,
-        @Query("apikey") apikey: String,
-        @Query("hash") hash: String,
-    ): Call<JsonCharComRequest>
+
 }

@@ -10,8 +10,17 @@
     android:orientation="vertical"
     android:padding="4dp">
 
+    <ImageView
+        android:id="@+id/ivCharacterImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_spiderman"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCharacterName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvCharacterName" />
+
     <TextView
-        android:id="@+id/tvCharComicTitle"
+        android:id="@+id/tvCharacterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
@@ -20,7 +29,7 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivCharacterImage"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

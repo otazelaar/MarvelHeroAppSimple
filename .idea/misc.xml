@@ -11,13 +11,14 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/fragment_character_detail.xml" value="0.26205128205128203" />
         <entry key="app/src/main/res/layout/fragment_character_detail_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_character_list.xml" value="0.26205128205128203" />
+        <entry key="app/src/main/res/layout/fragment_character_list.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/fragment_saved_character.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/fragment_search_character.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/item_characters_detail.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/layout/item_characters_layout.xml" value="1.0" />
         <entry key="app/src/main/res/layout/list_item_character.xml" value="0.26205128205128203" />
         <entry key="app/src/main/res/layout/list_item_comic.xml" value="0.24444444444444444" />
+        <entry key="app/src/main/res/layout/list_item_search_character.xml" value="0.26614583333333336" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.1" />
       </map>
     </option>
