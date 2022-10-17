@@ -20,11 +20,8 @@ class CharacterViewModel(
 ) : ViewModel() {
 
     val characterList: MutableLiveData<Resource<JsonCharacterRequest>> = MutableLiveData()
-    var characterListPage = 1
     val searchCharacters: MutableLiveData<Resource<JsonCharacterRequest>> = MutableLiveData()
-    var searchCharactersPage = 1
     val comicsByID: MutableLiveData<Resource<JsonCharComRequest>> = MutableLiveData()
-    var comicsByIDPage = 1
 
     init {
         getCharacters()

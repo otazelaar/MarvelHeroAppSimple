@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
+import kotlinx.android.synthetic.main.fragment_character_detail.view.*
 import kotlinx.android.synthetic.main.list_item_character.view.*
 
 class CharactersAdapter: RecyclerView.Adapter<CharactersAdapter.CharactersViewHolder>() {

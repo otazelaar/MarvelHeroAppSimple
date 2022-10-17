@@ -1,14 +1,19 @@
 package com.otaz.marvelheroappsimple.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import androidx.room.migration.AutoMigrationSpec
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
+import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 
 @Database(
-    entities = [JsonCharacterResults::class],
-    version = 1
+    entities = [JsonCharacterResults::class, JsonCharComResults::class],
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ]
 )
 abstract class CharacterDatabase : RoomDatabase() {
 
@@ -20,7 +25,7 @@ abstract class CharacterDatabase : RoomDatabase() {
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: createDatabase(context).also { instance = it}
+            instance ?: createDatabase(context).also { instance = it }
         }
 
         private fun createDatabase(context: Context) =
@@ -28,6 +33,12 @@ abstract class CharacterDatabase : RoomDatabase() {
                 context.applicationContext,
                 CharacterDatabase::class.java,
                 "character_db.db"
-            ).build()
+            ).addMigrations(migration1to2).build()
+
+        val migration1to2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS room_comic_results (name CHAR NOT NULL PRIMARY KEY)")
+            }
+        }
     }
 }
