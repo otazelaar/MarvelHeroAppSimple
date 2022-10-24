@@ -2,9 +2,7 @@ package com.otaz.marvelheroappsimple.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.otaz.marvelheroappsimple.data.models.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
-import java.io.Serializable
 
 @Dao
 interface CharacterDao {
@@ -17,5 +15,4 @@ interface CharacterDao {
 
     @Delete
     suspend fun deleteCharacter(jsonCharacterResults: JsonCharacterResults)
-
 }

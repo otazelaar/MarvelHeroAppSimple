@@ -3,15 +3,11 @@ package com.otaz.marvelheroappsimple.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
-import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
-import kotlinx.android.synthetic.main.fragment_character_detail.view.*
-import kotlinx.android.synthetic.main.list_item_character.view.*
 import kotlinx.android.synthetic.main.list_item_comic.view.*
 
 class ComicsAdapter: RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
