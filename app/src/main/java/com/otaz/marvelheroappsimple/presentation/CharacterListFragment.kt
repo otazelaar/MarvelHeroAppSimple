@@ -1,13 +1,11 @@
 package com.otaz.marvelheroappsimple.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
@@ -23,7 +21,7 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (activity as CharacterActivity).viewModel
         setUpRecyclerView()
 
         charactersAdapter.setOnItemClickListener {
@@ -46,7 +44,7 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let { message ->
-                        Log.e(TAG, "An error occurred: $message")
+                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG).show()
                     }
                 }
                 is Resource.Loading -> {

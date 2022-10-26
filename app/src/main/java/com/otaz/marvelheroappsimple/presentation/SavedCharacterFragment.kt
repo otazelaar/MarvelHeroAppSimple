@@ -1,10 +1,8 @@
 package com.otaz.marvelheroappsimple.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -13,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
-import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
-import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_saved_character.*
 
 class SavedCharacterFragment : Fragment(R.layout.fragment_saved_character) {
@@ -25,14 +21,15 @@ class SavedCharacterFragment : Fragment(R.layout.fragment_saved_character) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
+        viewModel = (activity as CharacterActivity).viewModel
         setUpRecyclerView()
 
         charactersAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("charID", it)
             }
-            findNavController().navigate(R.id.action_savedCharacterFragment_to_characterDetailFragment,
+            findNavController().navigate(
+                R.id.action_savedCharacterFragment_to_characterDetailFragment,
                 bundle
             )
         }
