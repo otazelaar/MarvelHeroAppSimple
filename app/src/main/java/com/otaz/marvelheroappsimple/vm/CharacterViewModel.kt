@@ -16,7 +16,7 @@ import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
 import com.otaz.marvelheroappsimple.utils.CharacterApplication
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
-import com.otaz.marvelheroappsimple.utils.constants.Companion.LIMIT
+import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
 import kotlinx.coroutines.launch
@@ -29,7 +29,13 @@ class CharacterViewModel(
 ) : AndroidViewModel(app) {
 
     val characterList: MutableLiveData<Resource<JsonCharacterRequest>> = MutableLiveData()
+    var characterListPage = 1
+    var characterListResponse: JsonCharacterRequest? = null
+
     val searchCharacters: MutableLiveData<Resource<JsonCharacterRequest>> = MutableLiveData()
+    var searchCharactersPage = 1
+    var searchCharacterResponse: JsonCharacterRequest? = null
+
     val comicsByID: MutableLiveData<Resource<JsonCharComRequest>> = MutableLiveData()
 
     init {
@@ -51,7 +57,15 @@ class CharacterViewModel(
     private fun handleCharacterListResponse(response: Response<JsonCharacterRequest>): Resource<JsonCharacterRequest> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                characterListPage++
+                if(characterListResponse == null) {
+                    characterListResponse = resultResponse
+                } else {
+                    val oldCharacters = characterListResponse?.data?.results
+                    val newCharacters = resultResponse.data.results
+                    oldCharacters?.addAll(newCharacters)
+                }
+                return Resource.Success(characterListResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -60,7 +74,15 @@ class CharacterViewModel(
     private fun handleSearchCharactersResponse(response: Response<JsonCharacterRequest>): Resource<JsonCharacterRequest> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                searchCharactersPage++
+                if(searchCharacterResponse == null) {
+                    searchCharacterResponse = resultResponse
+                } else {
+                    val oldCharacters = searchCharacterResponse?.data?.results
+                    val newCharacters = resultResponse.data.results
+                    oldCharacters?.addAll(newCharacters)
+                }
+                return Resource.Success(searchCharacterResponse?: resultResponse)
             }
         }
         return Resource.Error(response.message())
@@ -89,7 +111,7 @@ class CharacterViewModel(
         characterList.postValue(Resource.Loading())
         try {
             if(hasInternetConnection()) {
-                val response = characterRepository.getCharacters(LIMIT, TIMESTAMP, API_KEY, hash())
+                val response = characterRepository.getCharacters(QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
                 characterList.postValue(handleCharacterListResponse(response))
             } else {
                 characterList.postValue(Resource.Error("No internet connection"))
@@ -106,7 +128,7 @@ class CharacterViewModel(
         searchCharacters.postValue(Resource.Loading())
         try {
             if(hasInternetConnection()) {
-                val response = characterRepository.searchCharacters(nameStartsWith, LIMIT, TIMESTAMP, API_KEY, hash())
+                val response = characterRepository.searchCharacters(nameStartsWith, QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
                 searchCharacters.postValue(handleSearchCharactersResponse(response))
             } else {
                 searchCharacters.postValue(Resource.Error("No internet connection"))
@@ -123,7 +145,7 @@ class CharacterViewModel(
         comicsByID.postValue(Resource.Loading())
         try {
             if(hasInternetConnection()) {
-                val response = characterRepository.getComicsByID(charID, LIMIT, TIMESTAMP, API_KEY, hash())
+                val response = characterRepository.getComicsByID(charID, QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
                 comicsByID.postValue(handleComicsByIDResponse(response))
             } else {
                 comicsByID.postValue(Resource.Error("No internet connection"))

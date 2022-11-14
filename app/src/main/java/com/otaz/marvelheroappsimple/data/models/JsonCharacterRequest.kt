@@ -6,10 +6,11 @@ import java.io.Serializable
 
 data class JsonCharacterRequest(
     val `data`: JsonCharacterData,
+    val total: Int?,
 )
 
 data class JsonCharacterData(
-    val results: List<JsonCharacterResults>,
+    val results: MutableList<JsonCharacterResults>,
 )
 
 @Entity(
@@ -18,6 +19,6 @@ data class JsonCharacterData(
 data class JsonCharacterResults(
     @PrimaryKey
     val id: Int,
-    val name: String,
-    val description: String,
+    val name: String?,
+    val description: String?,
 ) : Serializable

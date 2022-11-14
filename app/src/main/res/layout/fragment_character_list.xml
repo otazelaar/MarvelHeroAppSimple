@@ -39,13 +39,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:indeterminate="true"
-        android:visibility="gone"/>
+        android:visibility="invisible"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCharacterList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         android:layout_marginTop="214dp"
         android:background="@drawable/round_corners"
         tools:listitem="@layout/list_item_character"

@@ -28,7 +28,7 @@ abstract class CharacterDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 CharacterDatabase::class.java,
-                "character_db_redo.db"
+                "character_db_threeeee.db"
             ).build()
     }
 }
