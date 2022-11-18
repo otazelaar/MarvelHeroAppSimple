@@ -13,17 +13,20 @@ import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
-import com.otaz.marvelheroappsimple.utils.CharacterApplication
+import com.otaz.marvelheroappsimple.di.BaseApplication
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.Response
+import javax.inject.Inject
 
-class CharacterViewModel(
+@HiltViewModel
+class CharacterViewModel @Inject constructor(
     app: Application,
     private val characterRepository: CharacterRepository
 ) : AndroidViewModel(app) {
@@ -159,7 +162,7 @@ class CharacterViewModel(
     }
 
     private fun hasInternetConnection(): Boolean {
-        val connectivityManager = getApplication<CharacterApplication>().getSystemService(
+        val connectivityManager = getApplication<BaseApplication>().getSystemService(
             Context.CONNECTIVITY_SERVICE
         ) as ConnectivityManager
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

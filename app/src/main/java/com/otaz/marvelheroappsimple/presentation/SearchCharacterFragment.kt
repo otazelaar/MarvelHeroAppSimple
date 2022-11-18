@@ -6,6 +6,7 @@ import android.widget.AbsListView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants
 import com.otaz.marvelheroappsimple.utils.constants.Companion.SEARCH_CHARACTERS_TIME_DELAY
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_search_character.*
 import kotlinx.android.synthetic.main.fragment_search_character.idProgressBar
@@ -24,15 +26,15 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
 
-    lateinit var viewModel: CharacterViewModel
+    private val viewModel: CharacterViewModel by viewModels()
     lateinit var charactersAdapter: CharactersAdapter
     val TAG = "SearchCharacterFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as CharacterActivity).viewModel
         setUpRecyclerView()
 
         charactersAdapter.setOnItemClickListener {
@@ -66,7 +68,7 @@ class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
                         val totalPages = (jsonCharacterRequest.total?.div(constants.QUERY_PAGE_SIZE))?: + 2
                         isLastPage = viewModel.searchCharactersPage == totalPages
                         if(isLastPage) {
-                            rvCharacterList.setPadding(0,0,0,0)
+                            rvCharacterList?.setPadding(0,0,0,0)
                         }
                     }
                 }

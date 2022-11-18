@@ -5,27 +5,30 @@ import android.view.View
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
+import com.otaz.marvelheroappsimple.di.AppModule
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_list.*
 
+@AndroidEntryPoint
 class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
     private lateinit var charactersAdapter: CharactersAdapter
-    lateinit var viewModel: CharacterViewModel
+    private val viewModel: CharacterViewModel by viewModels()
 
     val TAG = "CharacterListFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as CharacterActivity).viewModel
         setUpRecyclerView()
 
         charactersAdapter.setOnItemClickListener {
