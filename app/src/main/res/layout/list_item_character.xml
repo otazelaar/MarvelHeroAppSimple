@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/idCharacterListItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:clickable="true"
     android:orientation="vertical"
     android:padding="4dp">
 
@@ -17,7 +15,8 @@
         android:src="@drawable/ic_spiderman"
         app:layout_constraintBottom_toBottomOf="@+id/tvCharacterName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvCharacterName" />
+        app:layout_constraintTop_toTopOf="@+id/tvCharacterName"
+        android:contentDescription="@string/cd_iv_for_rv" />
 
     <TextView
         android:id="@+id/tvCharacterName"
@@ -25,10 +24,10 @@
         android:layout_height="wrap_content"
         android:gravity="start"
         android:padding="8dp"
-        android:text="@string/title"
-        android:textColor="@color/black"
+        android:fontFamily="@font/marvel_font"
+        android:textColor="@color/grey_light"
+        android:text="@string/character_name"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivCharacterImage" />
 

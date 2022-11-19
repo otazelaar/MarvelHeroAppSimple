@@ -4,7 +4,7 @@
     <!-- Strings used for fragments for navigation -->
     <string name="hero_list_fragment_label">HeroListViewFragment</string>
 
-    <string name="title">Title</string>
+    <string name="character_name"> Character Name</string>
 
     <!-- Character List -->
     <string name="hero_list_header">Heroes</string>
@@ -20,4 +20,14 @@
 
     <!-- Character View -->
     <string name="character_image_description">Image for character</string>
+
+    <!-- Icons -->
+    <string name="icon_home">Characters</string>
+    <string name="icon_save">Saved</string>
+    <string name="icon_search">Search</string>
+
+    <!-- Content Description -->
+    <string name="cd_iv_for_rv">Image view for recyclerview character list item icon</string>
+
+
 </resources>

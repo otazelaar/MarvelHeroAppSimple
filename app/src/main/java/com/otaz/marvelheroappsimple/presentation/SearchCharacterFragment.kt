@@ -18,9 +18,7 @@ import com.otaz.marvelheroappsimple.utils.constants
 import com.otaz.marvelheroappsimple.utils.constants.Companion.SEARCH_CHARACTERS_TIME_DELAY
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.fragment_search_character.*
-import kotlinx.android.synthetic.main.fragment_search_character.idProgressBar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -68,7 +66,7 @@ class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
                         val totalPages = (jsonCharacterRequest.total?.div(constants.QUERY_PAGE_SIZE))?: + 2
                         isLastPage = viewModel.searchCharactersPage == totalPages
                         if(isLastPage) {
-                            rvCharacterList?.setPadding(0,0,0,0)
+                            rvSearchCharacters.setPadding(0,0,0,0)
                         }
                     }
                 }

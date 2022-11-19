@@ -16,7 +16,7 @@
         android:fontFamily="@font/marvel_font"
         android:text="Character Name"
         android:textAlignment="center"
-        android:textColor="@color/marvel_red"
+        android:textColor="?attr/colorPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
         android:layout_height="35dp"
         android:gravity="center"
         android:text="Comics"
-        android:textColor="@color/marvel_red"
+        android:textColor="?attr/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -76,6 +76,9 @@
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+        app:srcCompat="@drawable/ic_plus_24"
+        android:contentDescription="@string/app_name"
         app:tint="@null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

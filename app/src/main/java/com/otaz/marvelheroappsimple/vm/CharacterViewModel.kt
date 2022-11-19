@@ -85,7 +85,7 @@ class CharacterViewModel @Inject constructor(
                     val newCharacters = resultResponse.data.results
                     oldCharacters?.addAll(newCharacters)
                 }
-                return Resource.Success(searchCharacterResponse?: resultResponse)
+                return Resource.Success(searchCharacterResponse ?: resultResponse)
             }
         }
         return Resource.Error(response.message())
