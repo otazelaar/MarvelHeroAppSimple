@@ -3,6 +3,7 @@ package com.otaz.marvelheroappsimple.presentation
 import android.os.Bundle
 import android.view.View
 import android.widget.AbsListView
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -47,6 +48,11 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
                     hideProgressBar()
                     response.data?.let { jsonCharacterRequest ->
                         charactersAdapter.differ.submitList(jsonCharacterRequest.data.results.toList())
+
+                        // Attempt at Picasso
+                        val artworkImage = view?.findViewById(R.id.ivCharacterImage) as ImageView
+                        viewModel.getArtworkImageForView(jsonCharacterRequest.data.results, artworkImage)
+
                         val totalPages = (jsonCharacterRequest.total?.div(QUERY_PAGE_SIZE))?: + 2
                         isLastPage = viewModel.characterListPage == totalPages
                         if(isLastPage) {

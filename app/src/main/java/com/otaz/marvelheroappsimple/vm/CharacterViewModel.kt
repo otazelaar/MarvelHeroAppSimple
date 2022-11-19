@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
+import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -185,6 +186,11 @@ class CharacterViewModel @Inject constructor(
             }
         }
         return false
+    }
+
+    // Attempt at Picasso
+    fun getArtworkImageForView(imageId: String, imageView: ImageView) {
+        characterRepository.loadImageFromPicasso(imageId)?.into(imageView)
     }
 
 }
