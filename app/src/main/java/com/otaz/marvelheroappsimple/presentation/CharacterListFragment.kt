@@ -17,60 +17,24 @@ import com.otaz.marvelheroappsimple.di.AppModule
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_list.*
 
 @AndroidEntryPoint
 class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
-    private lateinit var charactersAdapter: CharactersAdapter
     private val viewModel: CharacterViewModel by viewModels()
 
     val TAG = "CharacterListFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpRecyclerView()
 
-        charactersAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("charID", it)
-            }
-            findNavController().navigate(
-                R.id.action_characterListFragment_to_characterDetailFragment,
-                bundle
-            )
-        }
-
-        viewModel.characterList.observe(viewLifecycleOwner, Observer { response ->
-            when(response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.data?.let { jsonCharacterRequest ->
-                        charactersAdapter.differ.submitList(jsonCharacterRequest.data.results.toList())
-
-                        // Attempt at Picasso
-                        val artworkImage = view?.findViewById(R.id.ivCharacterImage) as ImageView
-                        viewModel.getArtworkImageForView(jsonCharacterRequest.data.results, artworkImage)
-
-                        val totalPages = (jsonCharacterRequest.total?.div(QUERY_PAGE_SIZE))?: + 2
-                        isLastPage = viewModel.characterListPage == totalPages
-                        if(isLastPage) {
-                            rvCharacterList.setPadding(0,0,0,0)
-                        }
-                    }
-                }
-                is Resource.Error -> {
-                    hideProgressBar()
-                    response.message?.let { message ->
-                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG).show()
-                    }
-                }
-                is Resource.Loading -> {
-                    showProgressBar()
-                }
-            }
-        })
+        //THIS WORKS FOR PICASSO!!!!
+        val imageView = view.findViewById<ImageView>(R.id.ivMarvelStudiosText)
+        val url = "https://i.annihil.us/u/prod/marvel/i/mg/1/70/4c003adccbe4f/standard_amazing.jpg"
+        Picasso.get().load(url).into(imageView)
     }
 
     private fun hideProgressBar() {
@@ -116,12 +80,4 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
         }
     }
 
-    private fun setUpRecyclerView() {
-        charactersAdapter = CharactersAdapter()
-        rvCharacterList.apply {
-            adapter = charactersAdapter
-            layoutManager = LinearLayoutManager(activity)
-            addOnScrollListener(this@CharacterListFragment.scrollListener)
-        }
-    }
 }

@@ -44,6 +44,10 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
             viewModel.getComicsByID(charID.id)
         }
 
+        lifecycleScope.launch {
+            viewModel.getImageByID(charID.id)
+        }
+
         viewModel.comicsByID.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {

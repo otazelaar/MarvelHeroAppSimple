@@ -19,6 +19,10 @@ class CharacterRepository(
     suspend fun getComicsByID(charID: Int, limit: Int, ts: String, apikey: String, hash: String) =
         AppModule.provideApiClient().getComicsByID(charID, limit, ts, apikey, hash)
 
+    // Attempt at Picasso
+    suspend fun getImageById(charID: Int, limit: Int, ts: String, apikey: String, hash: String) =
+        AppModule.provideApiClient().getImageByID(charID, limit, ts, apikey, hash)
+
     suspend fun upsert(jsonCharacterResults: JsonCharacterResults) =
         db.getCharacterDao().upsert(jsonCharacterResults)
 
@@ -32,4 +36,5 @@ class CharacterRepository(
     fun loadImageFromPicasso(imageId: String): RequestCreator? {
         return Picasso.get().load("https://www.artic.edu/iiif/2/$imageId/full/843,/0/default.jpg")
     }
+
 }

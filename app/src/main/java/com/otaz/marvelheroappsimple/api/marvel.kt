@@ -44,4 +44,15 @@ interface Marvel {
         @Query("hash") hash: String,
     ): Response<JsonCharComRequest>
 
+    /**
+     * Return the image path of a specific character *charID*
+     */
+    @GET("characters/{charID}/thumbnail")
+    suspend fun getImageByID(
+        @Path("charID") charID: Int,
+        @Query("limit") limit: Int,
+        @Query("ts") ts: String,
+        @Query("apikey") apikey: String,
+        @Query("hash") hash: String,
+    ): Response<JsonCharacterRequest>
 }
