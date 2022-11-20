@@ -47,7 +47,15 @@ class CharactersAdapter: RecyclerView.Adapter<CharactersAdapter.CharactersViewHo
 //            Picasso.get().load(characterImageLink).into(ivCharacterImage)
 
             var characterImageLink = "${characters.thumbnail.path}/standard_medium.jpg"
-            Glide.with(this).load(characterImageLink).into(ivCharacterImage)
+
+            fun String.toHttpsPrefix(): String? = if (isNotEmpty() && !startsWith("https://") && !startsWith("http://")) {
+                "https://$this"
+            } else if (startsWith("http://")) {
+                replace("http://", "https://")
+            } else this
+
+
+            Glide.with(this).load(characterImageLink.toHttpsPrefix()).into(ivCharacterImage)
             Log.i(TAG,"This is the link: ${println(characters.thumbnail.path)}")
 
             setOnClickListener{

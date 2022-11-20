@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.utils.Resource
@@ -17,6 +18,8 @@ import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_list.*
+import kotlinx.android.synthetic.main.list_item_character.*
+import kotlinx.android.synthetic.main.list_item_character.view.*
 
 @AndroidEntryPoint
 class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
@@ -29,6 +32,9 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
+
+        val url = "http://i.annihil.us/u/prod/marvel/i/mg/1/70/4c003adccbe4f/standard_amazing.jpg"
+        Glide.with(this).load(url).into(ivMarvelStudiosText)
 
         charactersAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
