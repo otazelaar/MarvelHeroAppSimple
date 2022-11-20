@@ -8,11 +8,18 @@
     android:padding="8dp"
     tools:context=".presentation.CharacterDetailFragment">
 
+    <ImageView
+        android:id="@+id/ivCharacterImageDetail"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_marvel_character_detail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/tvCharacterTitleText"
-        android:layout_width="397dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/marvel_font"
         android:text="Character Name"
         android:textAlignment="center"
@@ -20,7 +27,7 @@
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/ivCharacterImageDetail"/>
 
     <TextView
         android:id="@+id/tvCharacterDescription"
@@ -42,20 +49,18 @@
         android:textColor="?attr/colorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCharacterDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCharComList"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/round_corners"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvComicListHeader"
-        tools:listitem="@layout/list_item_character" />
+        tools:listitem="@layout/list_item_comic" />
 
     <ProgressBar
         android:id="@+id/pbCharacterDetail"

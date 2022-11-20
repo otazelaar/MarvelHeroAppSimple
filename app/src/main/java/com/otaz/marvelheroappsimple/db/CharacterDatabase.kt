@@ -16,6 +16,6 @@ abstract class CharacterDatabase : RoomDatabase() {
     abstract fun getCharacterDao(): CharacterDao
 
     companion object {
-        const val DB_NAME: String = "db_main_one"
+        const val DB_NAME: String = "db_main_five"
     }
 }

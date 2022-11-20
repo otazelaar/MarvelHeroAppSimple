@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.data.models.JsonCharComResults
+import kotlinx.android.synthetic.main.list_item_character.view.*
 import kotlinx.android.synthetic.main.list_item_comic.view.*
 
 class ComicsAdapter: RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
@@ -53,5 +55,4 @@ class ComicsAdapter: RecyclerView.Adapter<ComicsAdapter.ComicsViewHolder>() {
     fun setOnItemClickListener(listener: (JsonCharComResults) -> Unit) {
         onItemClickListener = listener
     }
-
 }

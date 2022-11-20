@@ -41,22 +41,11 @@ class CharactersAdapter: RecyclerView.Adapter<CharactersAdapter.CharactersViewHo
         val characters = differ.currentList[position]
         holder.itemView.apply {
             tvCharacterName.text = characters.name
+            val numberOfComics = characters.comics.available.toString()
+            tvCharacterNumberOfComics.text = "Number of comics: ${numberOfComics}"
 
-            // Picasso Image loading from api call for character-specific images to be displayed in RV
-//            val url = "https://i.annihil.us/u/prod/marvel/i/mg/1/70/4c003adccbe4f/standard_amazing.jpg"
-//            Picasso.get().load(characterImageLink).into(ivCharacterImage)
-
-            var characterImageLink = "${characters.thumbnail.path}/standard_medium.jpg"
-
-            fun String.toHttpsPrefix(): String? = if (isNotEmpty() && !startsWith("https://") && !startsWith("http://")) {
-                "https://$this"
-            } else if (startsWith("http://")) {
-                replace("http://", "https://")
-            } else this
-
-
+            val characterImageLink = "${characters.thumbnail.path}/standard_amazing.jpg"
             Glide.with(this).load(characterImageLink.toHttpsPrefix()).into(ivCharacterImage)
-            Log.i(TAG,"This is the link: ${println(characters.thumbnail.path)}")
 
             setOnClickListener{
                 onItemClickListener?.let { it(characters) }
@@ -74,4 +63,9 @@ class CharactersAdapter: RecyclerView.Adapter<CharactersAdapter.CharactersViewHo
         onItemClickListener = listener
     }
 
+    private fun String.toHttpsPrefix(): String? = if (isNotEmpty() && !startsWith("https://") && !startsWith("http://")) {
+        "https://$this"
+    } else if (startsWith("http://")) {
+        replace("http://", "https://")
+    } else this
 }

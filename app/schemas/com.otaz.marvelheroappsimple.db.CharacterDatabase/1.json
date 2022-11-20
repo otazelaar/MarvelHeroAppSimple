@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1262e0c5e01a66498ae8898ab101bcd6",
+    "identityHash": "d1cc82d587fcf564dea528ad4f0f2a4b",
     "entities": [
       {
         "tableName": "room_character_results",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `description` TEXT, `thumbnail` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `description` TEXT, `thumbnail` TEXT NOT NULL, `comics` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -30,6 +30,12 @@
             "fieldPath": "thumbnail",
             "columnName": "thumbnail",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comics",
+            "columnName": "comics",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -78,7 +84,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1262e0c5e01a66498ae8898ab101bcd6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd1cc82d587fcf564dea528ad4f0f2a4b')"
     ]
   }
 }

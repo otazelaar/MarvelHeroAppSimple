@@ -22,9 +22,16 @@ data class JsonCharacterResults(
     val name: String?,
     val description: String?,
     val thumbnail: Thumbnail,
+    val comics: Comics,
 ) : Serializable
 
 data class Thumbnail(
     val extension: String,
     val path: String
+)
+
+data class Comics(
+    val available: Int,
+    val collectionURI: String,
+    val returned: Int
 )

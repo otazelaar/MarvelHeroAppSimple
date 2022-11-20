@@ -33,9 +33,6 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
 
-        val url = "http://i.annihil.us/u/prod/marvel/i/mg/1/70/4c003adccbe4f/standard_amazing.jpg"
-        Glide.with(this).load(url).into(ivMarvelStudiosText)
-
         charactersAdapter.setOnItemClickListener {
             val bundle = Bundle().apply {
                 putSerializable("charID", it)
@@ -45,6 +42,7 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
                 bundle
             )
         }
+
         viewModel.characterList.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {

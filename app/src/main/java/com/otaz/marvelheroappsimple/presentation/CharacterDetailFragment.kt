@@ -9,13 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.otaz.marvelheroappsimple.R
+import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_detail.*
+import kotlinx.android.synthetic.main.list_item_character.view.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,9 +34,13 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         setUpRecyclerView()
 
         val charID = args.charID
+        val characterImagePath = args.charID.thumbnail.path
 
         tvCharacterTitleText.text = charID.name
         tvCharacterDescription.text = charID.description
+
+        val characterImageUrl = "${characterImagePath}/landscape_incredible.jpg"
+        Glide.with(this).load(characterImageUrl.toHttpsPrefix()).into(ivCharacterImageDetail)
 
         btSave.setOnClickListener {
             viewModel.saveCharacter(charID)
@@ -80,4 +87,10 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
             layoutManager = LinearLayoutManager(activity)
         }
     }
+
+    private fun String.toHttpsPrefix(): String? = if (isNotEmpty() && !startsWith("https://") && !startsWith("http://")) {
+        "https://$this"
+    } else if (startsWith("http://")) {
+        replace("http://", "https://")
+    } else this
 }

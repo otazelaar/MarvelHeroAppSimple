@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/idCharacterListItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,24 +13,39 @@
         android:id="@+id/ivCharacterImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:contentDescription="@string/cd_iv_for_rv"
         android:src="@drawable/spiderman_jpg"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/cd_iv_for_rv" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvCharacterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:padding="8dp"
         android:fontFamily="@font/marvel_font"
-        android:textColor="@color/grey_light"
         android:text="@string/character_name"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="@id/ivCharacterImage"
-        app:layout_constraintBottom_toBottomOf="@id/ivCharacterImage"
+        android:textColor="@color/grey_light"
+        android:textSize="25sp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvCharacterNumberOfComics"
+        app:layout_constraintStart_toEndOf="@+id/ivCharacterImage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/tvCharacterNumberOfComics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/marvel_font"
+        android:text="Number of Comics"
+        android:textColor="@color/red_700"
+        android:layout_marginStart="8dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCharacterName"
+        app:layout_constraintVertical_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/ivCharacterImage" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
