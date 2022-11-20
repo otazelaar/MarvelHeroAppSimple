@@ -12,7 +12,7 @@
         android:id="@+id/ivCharacterImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/ic_spiderman"
+        android:src="@drawable/spiderman_jpg"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="@string/cd_iv_for_rv" />

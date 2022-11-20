@@ -2,6 +2,8 @@ package com.otaz.marvelheroappsimple.di
 
 import android.content.Context
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
 import com.otaz.marvelheroappsimple.api.Marvel
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
 import com.otaz.marvelheroappsimple.db.CharacterDao
@@ -65,5 +67,4 @@ object AppModule {
     fun provideCharacterDao(db: CharacterDatabase): CharacterDao {
         return db.getCharacterDao()
     }
-
 }

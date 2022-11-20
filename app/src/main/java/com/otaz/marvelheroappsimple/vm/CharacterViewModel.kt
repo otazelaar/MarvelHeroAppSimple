@@ -42,10 +42,6 @@ class CharacterViewModel @Inject constructor(
 
     val comicsByID: MutableLiveData<Resource<JsonCharComRequest>> = MutableLiveData()
 
-    // Attempt at picasso
-    val imageByID: MutableLiveData<Resource<JsonCharacterRequest>> = MutableLiveData()
-
-
     init {
         getCharacters()
     }
@@ -60,10 +56,6 @@ class CharacterViewModel @Inject constructor(
 
     fun getComicsByID(charID: Int) = viewModelScope.launch {
         safeGetComicsByIDCall(charID)
-    }
-
-    fun getImageByID(charID: Int) = viewModelScope.launch {
-        safeGetImageByIDCall(charID)
     }
 
     private fun handleCharacterListResponse(response: Response<JsonCharacterRequest>): Resource<JsonCharacterRequest> {
@@ -101,16 +93,6 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun handleComicsByIDResponse(response: Response<JsonCharComRequest>): Resource<JsonCharComRequest> {
-        if(response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
-    // attempt at picasso
-    private fun handleImageByIDResponse(response: Response<JsonCharacterRequest>): Resource<JsonCharacterRequest> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)
@@ -180,24 +162,6 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    // Attempt at Picasso
-    private suspend fun safeGetImageByIDCall(charID: Int) {
-        imageByID.postValue(Resource.Loading())
-        try {
-            if(hasInternetConnection()) {
-                val response = characterRepository.getImageById(charID, QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
-                imageByID.postValue(handleImageByIDResponse(response))
-            } else {
-                imageByID.postValue(Resource.Error("No internet connection"))
-            }
-        } catch (t: Throwable) {
-            when(t) {
-                is IOException -> imageByID.postValue(Resource.Error("Network failure"))
-                else -> imageByID.postValue(Resource.Error("Conversion error"))
-            }
-        }
-    }
-
     private fun hasInternetConnection(): Boolean {
         val connectivityManager = getApplication<BaseApplication>().getSystemService(
             Context.CONNECTIVITY_SERVICE
@@ -222,11 +186,6 @@ class CharacterViewModel @Inject constructor(
             }
         }
         return false
-    }
-
-    // Attempt at Picasso
-    fun getArtworkImageForView(imageId: String, imageView: ImageView) {
-        characterRepository.loadImageFromPicasso(imageId)?.into(imageView)
     }
 
 }
