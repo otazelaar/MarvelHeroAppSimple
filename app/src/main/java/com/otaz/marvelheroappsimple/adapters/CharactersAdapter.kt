@@ -1,11 +1,15 @@
 package com.otaz.marvelheroappsimple.adapters
 
+import android.content.ContentValues
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import kotlinx.android.synthetic.main.list_item_character.view.*
@@ -38,6 +42,15 @@ class CharactersAdapter: RecyclerView.Adapter<CharactersAdapter.CharactersViewHo
         val characters = differ.currentList[position]
         holder.itemView.apply {
             tvCharacterName.text = characters.name
+
+            // Picasso Image loading from api call for character-specific images to be displayed in RV
+//            val url = "https://i.annihil.us/u/prod/marvel/i/mg/1/70/4c003adccbe4f/standard_amazing.jpg"
+//            Picasso.get().load(characterImageLink).into(ivCharacterImage)
+
+            var characterImageLink = "${characters.thumbnail.path}/standard_amazing.jpg"
+            Glide.with(this).load(characterImageLink).into(ivCharacterImage)
+            Log.i(ContentValues.TAG,"This is the link: ${println(characters.thumbnail.path)}")
+
             setOnClickListener{
                 onItemClickListener?.let { it(characters) }
             }
