@@ -12,13 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_detail.*
-import kotlinx.android.synthetic.main.list_item_character.view.*
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
