@@ -45,70 +45,75 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
-    // Implementation used to attempt to share data between
-    // fragments so that character ID can be used to make API call for chosen character
-    implementation "androidx.fragment:fragment-ktx:1.5.3"
-    def nav_version = "2.5.2"
+    // Implementation used to attempt to share data between fragments so that character ID can be used to make API call for chosen character
+    def fragmentDataSharing = "1.5.4"
+    implementation "androidx.fragment:fragment-ktx:$fragmentDataSharing"
+
+    // Navigation
+    def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
+    // Retrofit
     def retrofit = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
+    // Okhttp
     def okhttp = "4.10.0"
     implementation "com.squareup.okhttp3:okhttp:$okhttp"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp"
     implementation "com.squareup.okhttp3:mockwebserver:$okhttp"
 
-    def circleImageView = "3.1.0"
-    implementation "de.hdodenhof:circleimageview:$circleImageView"
-
+    // Room
     def room = "2.4.3"
     implementation "androidx.room:room-runtime:$room"
     kapt "androidx.room:room-compiler:$room"
 
-    def glide = "4.14.1"
-    implementation "com.github.bumptech.glide:glide:$glide"
-    kapt "com.github.bumptech.glide:compiler:$glide"
-
     // Architectural Components
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    def architecturalComponents= "2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$architecturalComponents"
 
     // Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.4.3"
+    def ktxRoomExt = "2.4.3"
+    implementation "androidx.room:room-ktx:$ktxRoomExt"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+    def coroutines = "1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 
     // Coroutine Lifecycle Scopes
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    def lifecycleScopes = "2.5.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleScopes"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleScopes"
 
     // Dagger-Hilt
-    implementation "com.google.dagger:hilt-android:2.44.2"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    def daggerHilt = "2.44.2"
+    implementation "com.google.dagger:hilt-android:$daggerHilt"
+    kapt "com.google.dagger:hilt-compiler:$daggerHilt"
 
     // MDC-Android
-    implementation 'com.google.android.material:material:1.7.0'
+    def mdc = "1.7.0"
+    implementation "com.google.android.material:material:$mdc"
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.14.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+    def glide = "4.14.2"
+    implementation "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
     // Circle Image View
-    implementation "de.hdodenhof:circleimageview:3.1.0"
+    def circleImageView = "3.1.0"
+    implementation "de.hdodenhof:circleimageview:$circleImageView"
 }
