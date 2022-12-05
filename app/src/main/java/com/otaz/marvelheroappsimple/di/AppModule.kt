@@ -31,9 +31,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(
-        db: CharacterDatabase,
+        apiClient: Marvel,
+        characterDao: CharacterDao,
     ): CharacterRepository {
-        return CharacterRepository(db)
+        return CharacterRepository(apiClient, characterDao)
     }
 
     @Singleton

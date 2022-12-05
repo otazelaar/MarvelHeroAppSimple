@@ -1,28 +1,32 @@
 package com.otaz.marvelheroappsimple.data.repository
 
+import com.otaz.marvelheroappsimple.api.Marvel
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
-import com.otaz.marvelheroappsimple.db.CharacterDatabase
-import com.otaz.marvelheroappsimple.di.AppModule
+import com.otaz.marvelheroappsimple.db.CharacterDao
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class CharacterRepository(
-    private val db: CharacterDatabase
+@Singleton
+class CharacterRepository @Inject constructor(
+    private val apiClient: Marvel,
+    private val characterDao: CharacterDao,
 ) {
     suspend fun getCharacters(limit: Int, ts: String, apikey: String, hash: String) =
-        AppModule.provideApiClient().getCharacters(limit, ts, apikey, hash)
+        apiClient.getCharacters(limit, ts, apikey, hash)
 
     suspend fun searchCharacters(nameStartsWith: String, limit: Int, ts: String, apikey: String, hash: String) =
-        AppModule.provideApiClient().searchForCharacters(nameStartsWith, limit, ts, apikey, hash)
+        apiClient.searchForCharacters(nameStartsWith, limit, ts, apikey, hash)
 
     suspend fun getComicsByID(charID: Int, limit: Int, ts: String, apikey: String, hash: String) =
-        AppModule.provideApiClient().getComicsByID(charID, limit, ts, apikey, hash)
+        apiClient.getComicsByID(charID, limit, ts, apikey, hash)
 
     suspend fun upsert(jsonCharacterResults: JsonCharacterResults) =
-        db.getCharacterDao().upsert(jsonCharacterResults)
+        characterDao.upsert(jsonCharacterResults)
 
     fun getSavedCharacters() =
-        db.getCharacterDao().getAllCharacters()
+        characterDao.getAllCharacters()
 
     suspend fun deleteCharacter(jsonCharacterResults: JsonCharacterResults) =
-        db.getCharacterDao().deleteCharacter(jsonCharacterResults)
+        characterDao.deleteCharacter(jsonCharacterResults)
 
 }
