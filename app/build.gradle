@@ -116,4 +116,8 @@ dependencies {
     // Circle Image View
     def circleImageView = "3.1.0"
     implementation "de.hdodenhof:circleimageview:$circleImageView"
+
+    // Splash Screen
+    def splash = "1.0.0"
+    implementation "androidx.core:core-splashscreen:$splash"
 }
