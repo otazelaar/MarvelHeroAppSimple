@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
-import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import com.otaz.marvelheroappsimple.vm.CharacterListViewModel
+import com.otaz.marvelheroappsimple.vm.SavedCharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_saved_character.*
 
 @AndroidEntryPoint
 class SavedCharacterFragment : Fragment(R.layout.fragment_saved_character) {
 
-    private val viewModel: CharacterViewModel by viewModels()
+    private val viewModel: SavedCharacterViewModel by viewModels()
     lateinit var charactersAdapter: CharactersAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

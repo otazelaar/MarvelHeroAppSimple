@@ -6,13 +6,10 @@ import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
-import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterRequest
-import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
 import com.otaz.marvelheroappsimple.di.BaseApplication
 import com.otaz.marvelheroappsimple.utils.Resource
@@ -27,7 +24,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterViewModel @Inject constructor(
+class CharacterListViewModel @Inject constructor(
     app: Application,
     private val characterRepository: CharacterRepository
 ) : AndroidViewModel(app) {
@@ -36,26 +33,12 @@ class CharacterViewModel @Inject constructor(
     var characterListPage = 1
     var characterListResponse: JsonCharacterRequest? = null
 
-    val searchCharacters: MutableLiveData<Resource<JsonCharacterRequest>> = MutableLiveData()
-    var searchCharactersPage = 1
-    var searchCharacterResponse: JsonCharacterRequest? = null
-
-    val comicsByID: MutableLiveData<Resource<JsonCharComRequest>> = MutableLiveData()
-
     init {
         getCharacters()
     }
 
     fun getCharacters() = viewModelScope.launch {
         safeCharactersCall()
-    }
-
-    fun searchCharacters(nameStartsWith: String) = viewModelScope.launch {
-        safeSearchCharactersCall(nameStartsWith)
-    }
-
-    fun getComicsByID(charID: Int) = viewModelScope.launch {
-        safeGetComicsByIDCall(charID)
     }
 
     private fun handleCharacterListResponse(response: Response<JsonCharacterRequest>): Resource<JsonCharacterRequest> {
@@ -75,42 +58,6 @@ class CharacterViewModel @Inject constructor(
         return Resource.Error(response.message())
     }
 
-    private fun handleSearchCharactersResponse(response: Response<JsonCharacterRequest>): Resource<JsonCharacterRequest> {
-        if(response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                searchCharactersPage++
-                if(searchCharacterResponse == null) {
-                    searchCharacterResponse = resultResponse
-                } else {
-                    val oldCharacters = searchCharacterResponse?.data?.results
-                    val newCharacters = resultResponse.data.results
-                    oldCharacters?.addAll(newCharacters)
-                }
-                return Resource.Success(searchCharacterResponse ?: resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
-    private fun handleComicsByIDResponse(response: Response<JsonCharComRequest>): Resource<JsonCharComRequest> {
-        if(response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
-    fun saveCharacter(jsonCharacterResults: JsonCharacterResults) = viewModelScope.launch {
-        characterRepository.upsert(jsonCharacterResults)
-    }
-
-    fun getSavedCharacters() = characterRepository.getSavedCharacters()
-
-    fun deleteCharacter(jsonCharacterResults: JsonCharacterResults) = viewModelScope.launch {
-        characterRepository.deleteCharacter(jsonCharacterResults)
-    }
-
     private suspend fun safeCharactersCall() {
         characterList.postValue(Resource.Loading())
         try {
@@ -124,40 +71,6 @@ class CharacterViewModel @Inject constructor(
             when(t) {
                 is IOException -> characterList.postValue(Resource.Error("Network failure"))
                 else -> characterList.postValue(Resource.Error("Conversion error"))
-            }
-        }
-    }
-
-    private suspend fun safeSearchCharactersCall(nameStartsWith: String) {
-        searchCharacters.postValue(Resource.Loading())
-        try {
-            if(hasInternetConnection()) {
-                val response = characterRepository.searchCharacters(nameStartsWith, QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
-                searchCharacters.postValue(handleSearchCharactersResponse(response))
-            } else {
-                searchCharacters.postValue(Resource.Error("No internet connection"))
-            }
-        } catch (t: Throwable) {
-            when(t) {
-                is IOException -> searchCharacters.postValue(Resource.Error("Network failure"))
-                else -> searchCharacters.postValue(Resource.Error("Conversion error"))
-            }
-        }
-    }
-
-    private suspend fun safeGetComicsByIDCall(charID: Int) {
-        comicsByID.postValue(Resource.Loading())
-        try {
-            if(hasInternetConnection()) {
-                val response = characterRepository.getComicsByID(charID, QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
-                comicsByID.postValue(handleComicsByIDResponse(response))
-            } else {
-                comicsByID.postValue(Resource.Error("No internet connection"))
-            }
-        } catch (t: Throwable) {
-            when(t) {
-                is IOException -> comicsByID.postValue(Resource.Error("Network failure"))
-                else -> comicsByID.postValue(Resource.Error("Conversion error"))
             }
         }
     }

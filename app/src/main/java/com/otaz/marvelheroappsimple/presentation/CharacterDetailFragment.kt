@@ -14,7 +14,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.adapters.ComicsAdapter
 import com.otaz.marvelheroappsimple.utils.Resource
-import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import com.otaz.marvelheroappsimple.vm.CharacterDetailViewModel
+import com.otaz.marvelheroappsimple.vm.CharacterListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_detail.*
 import kotlinx.coroutines.launch
@@ -22,17 +23,17 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
-    private val viewModel: CharacterViewModel by viewModels()
+    private val viewModel: CharacterDetailViewModel by viewModels()
     lateinit var comicsAdapter: ComicsAdapter
-    val TAG = "CharacterDetailFragment"
     val args: CharacterDetailFragmentArgs by navArgs()
+    val TAG = "CharacterDetailFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
 
         val charID = args.charID
-        val characterImagePath = args.charID.thumbnail.path
+        val characterImagePath = charID.thumbnail.path
 
         tvCharacterTitleText.text = charID.name
         tvCharacterDescription.text = charID.description

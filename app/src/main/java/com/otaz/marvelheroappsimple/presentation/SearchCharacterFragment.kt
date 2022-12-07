@@ -16,7 +16,8 @@ import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants
 import com.otaz.marvelheroappsimple.utils.constants.Companion.SEARCH_CHARACTERS_TIME_DELAY
-import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import com.otaz.marvelheroappsimple.vm.CharacterListViewModel
+import com.otaz.marvelheroappsimple.vm.SearchCharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search_character.*
 import kotlinx.coroutines.Job
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
 
-    private val viewModel: CharacterViewModel by viewModels()
+    private val viewModel: SearchCharacterViewModel by viewModels()
     lateinit var charactersAdapter: CharactersAdapter
     val TAG = "SearchCharacterFragment"
 
@@ -97,7 +98,7 @@ class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
     var isLastPage = false
     var isScrolling = false
 
-    val scrollListener = object : RecyclerView.OnScrollListener() {
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
