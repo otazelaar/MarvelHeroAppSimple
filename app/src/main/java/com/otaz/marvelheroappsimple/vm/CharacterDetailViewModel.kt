@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
@@ -25,7 +26,14 @@ import javax.inject.Inject
 class CharacterDetailViewModel @Inject constructor(
     app: Application,
     private val characterRepository: CharacterRepository,
+    savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(app) {
+    val args = fromSavedStateHandle(savedStateHandle)
+
+    private fun fromSavedStateHandle(handle: SavedStateHandle) =
+        CharacterDetailFragmentArgs(
+            charID = handle["charID"]!!,
+        )
 
     val comicsByID: MutableLiveData<Resource<JsonCharComRequest>> = MutableLiveData()
 

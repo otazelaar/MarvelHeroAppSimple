@@ -25,14 +25,13 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     private val viewModel: CharacterDetailViewModel by viewModels()
     lateinit var comicsAdapter: ComicsAdapter
-    val args: CharacterDetailFragmentArgs by navArgs()
     val TAG = "CharacterDetailFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
 
-        val charID = args.charID
+        val charID = viewModel.args.charID
         val characterImagePath = charID.thumbnail.path
 
         tvCharacterTitleText.text = charID.name
