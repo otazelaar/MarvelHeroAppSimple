@@ -14,6 +14,7 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -34,9 +35,11 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(
-        db: CharacterDatabase,
+        apiClient: Marvel,
+        characterDao: CharacterDao,
+        globalScope: GlobalScope,
     ): CharacterRepository {
-        return CharacterRepository(db)
+        return CharacterRepository(apiClient, characterDao, globalScope)
     }
 
     @Singleton
