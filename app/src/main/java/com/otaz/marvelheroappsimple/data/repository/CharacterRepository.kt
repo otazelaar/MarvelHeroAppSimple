@@ -3,9 +3,10 @@ package com.otaz.marvelheroappsimple.data.repository
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import com.otaz.marvelheroappsimple.db.CharacterDatabase
 import com.otaz.marvelheroappsimple.di.AppModule
+import kotlinx.coroutines.CoroutineScope
 
 class CharacterRepository(
-    private val db: CharacterDatabase
+    private val db: CharacterDatabase,
 ) {
     suspend fun getCharacters(limit: Int, ts: String, apikey: String, hash: String) =
         AppModule.provideApiClient().getCharacters(limit, ts, apikey, hash)

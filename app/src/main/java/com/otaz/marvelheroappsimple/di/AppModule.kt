@@ -13,6 +13,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -66,4 +68,8 @@ object AppModule {
     fun provideCharacterDao(db: CharacterDatabase): CharacterDao {
         return db.getCharacterDao()
     }
+
+    @Provides
+    @Singleton
+    fun globalScope(): CoroutineScope = CoroutineScope(SupervisorJob())
 }
