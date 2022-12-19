@@ -6,6 +6,7 @@ import com.otaz.marvelheroappsimple.db.CharacterDao
 import com.otaz.marvelheroappsimple.db.CharacterDatabase
 import com.otaz.marvelheroappsimple.di.AppModule
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CharacterRepository @Inject constructor(
@@ -13,21 +14,32 @@ class CharacterRepository @Inject constructor(
     private val characterDao: CharacterDao,
     private val globalScope: CoroutineScope
 ) {
+
     suspend fun getCharacters(limit: Int, ts: String, apikey: String, hash: String) =
-        apiClient.getCharacters(limit, ts, apikey, hash)
+        globalScope.launch {
+            apiClient.getCharacters(limit, ts, apikey, hash)
+        }
 
     suspend fun searchCharacters(nameStartsWith: String, limit: Int, ts: String, apikey: String, hash: String) =
-        apiClient.searchForCharacters(nameStartsWith, limit, ts, apikey, hash)
+        globalScope.launch {
+            apiClient.searchForCharacters(nameStartsWith, limit, ts, apikey, hash)
+        }
 
     suspend fun getComicsByID(charID: Int, limit: Int, ts: String, apikey: String, hash: String) =
-        apiClient.getComicsByID(charID, limit, ts, apikey, hash)
+        globalScope.launch {
+            apiClient.getComicsByID(charID, limit, ts, apikey, hash)
+        }
 
     suspend fun upsert(jsonCharacterResults: JsonCharacterResults) =
-        characterDao.upsert(jsonCharacterResults)
+        globalScope.launch {
+            characterDao.upsert(jsonCharacterResults)
+        }
 
-    fun getSavedCharacters() =
+    suspend fun getSavedCharacters() =
         characterDao.getAllCharacters()
 
     suspend fun deleteCharacter(jsonCharacterResults: JsonCharacterResults) =
-        characterDao.deleteCharacter(jsonCharacterResults)
+        globalScope.launch {
+            characterDao.deleteCharacter(jsonCharacterResults)
+        }
 }

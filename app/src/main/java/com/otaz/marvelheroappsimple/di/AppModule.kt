@@ -37,7 +37,7 @@ object AppModule {
     fun provideRepository(
         apiClient: Marvel,
         characterDao: CharacterDao,
-        globalScope: GlobalScope,
+        globalScope: CoroutineScope
     ): CharacterRepository {
         return CharacterRepository(apiClient, characterDao, globalScope)
     }

@@ -64,11 +64,6 @@ class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
                     hideProgressBar()
                     response.data?.let { jsonCharacterRequest ->
                         charactersAdapter.differ.submitList(jsonCharacterRequest.data.results.toList())
-                        val totalPages = (jsonCharacterRequest.total?.div(constants.QUERY_PAGE_SIZE))?: + 2
-                        isLastPage = viewModel.searchCharactersPage == totalPages
-                        if(isLastPage) {
-                            rvSearchCharacters.setPadding(0,0,0,0)
-                        }
                     }
                 }
                 is Resource.Error -> {
@@ -95,44 +90,12 @@ class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
     }
 
     var isLoading = false
-    var isLastPage = false
-    var isScrolling = false
-
-    private val scrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-            val visibleItemCount = layoutManager.childCount
-            val totalItemCount = layoutManager.itemCount
-
-            val isNotLoadingAndNotLastPage = !isLoading && !isLastPage
-            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
-            val isNotAtBeginning = firstVisibleItemPosition >= 0
-            val isTotalMoreThanVisible = totalItemCount >= constants.QUERY_PAGE_SIZE
-            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
-                    isTotalMoreThanVisible && isScrolling
-            if(shouldPaginate) {
-                viewModel.searchCharacters(etSearch.text.toString())
-                isScrolling = false
-            }
-        }
-
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-            if(newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
-                isScrolling = true
-            }
-        }
-    }
 
     private fun setUpRecyclerView() {
         charactersAdapter = CharactersAdapter()
         rvSearchCharacters.apply {
             adapter = charactersAdapter
             layoutManager = LinearLayoutManager(activity)
-            addOnScrollListener(this@SearchCharacterFragment.scrollListener)
         }
     }
 }

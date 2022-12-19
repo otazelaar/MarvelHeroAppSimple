@@ -11,7 +11,7 @@ interface CharacterDao {
     suspend fun upsert(jsonCharacterResults: JsonCharacterResults)
 
     @Query("SELECT * FROM room_character_results")
-    fun getAllCharacters(): LiveData<List<JsonCharacterResults>>
+    suspend fun getAllCharacters(): LiveData<List<JsonCharacterResults>>
 
     @Delete
     suspend fun deleteCharacter(jsonCharacterResults: JsonCharacterResults)

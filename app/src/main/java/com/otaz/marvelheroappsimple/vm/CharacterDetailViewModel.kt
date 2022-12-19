@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
@@ -16,6 +17,10 @@ import com.otaz.marvelheroappsimple.di.BaseApplication
 import com.otaz.marvelheroappsimple.presentation.CharacterDetailFragmentArgs
 import com.otaz.marvelheroappsimple.utils.Resource
 import com.otaz.marvelheroappsimple.utils.constants
+import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
+import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
+import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
+import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import okio.IOException
@@ -24,10 +29,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
-    app: Application,
     private val characterRepository: CharacterRepository,
     savedStateHandle: SavedStateHandle
-) : AndroidViewModel(app) {
+) : ViewModel() {
     val args = fromSavedStateHandle(savedStateHandle)
 
     private fun fromSavedStateHandle(handle: SavedStateHandle) =
@@ -55,51 +59,7 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     private suspend fun safeGetComicsByIDCall(charID: Int) {
-        comicsByID.postValue(Resource.Loading())
-        try {
-            if(hasInternetConnection()) {
-                val response = characterRepository.getComicsByID(charID,
-                    constants.QUERY_PAGE_SIZE,
-                    constants.TIMESTAMP,
-                    constants.API_KEY,
-                    constants.hash()
-                )
-                comicsByID.postValue(handleComicsByIDResponse(response))
-            } else {
-                comicsByID.postValue(Resource.Error("No internet connection"))
-            }
-        } catch (t: Throwable) {
-            when(t) {
-                is IOException -> comicsByID.postValue(Resource.Error("Network failure"))
-                else -> comicsByID.postValue(Resource.Error("Conversion error"))
-            }
-        }
+        val response = characterRepository.getComicsByID(charID, QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
+        comicsByID.postValue(handleComicsByIDResponse(response))
     }
-
-    private fun hasInternetConnection(): Boolean {
-        val connectivityManager = getApplication<BaseApplication>().getSystemService(
-            Context.CONNECTIVITY_SERVICE
-        ) as ConnectivityManager
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val activeNetwork = connectivityManager.activeNetwork ?: return true
-            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-            return when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                else -> false
-            }
-        } else {
-            connectivityManager.activeNetworkInfo?.run {
-                return when(type) {
-                    ConnectivityManager.TYPE_WIFI -> true
-                    ConnectivityManager.TYPE_MOBILE -> true
-                    ConnectivityManager.TYPE_ETHERNET -> true
-                    else -> false
-                }
-            }
-        }
-        return false
-    }
-
 }
