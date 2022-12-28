@@ -115,7 +115,7 @@ class CharacterViewModel @Inject constructor(
         characterList.postValue(Resource.Loading())
         try {
             if(hasInternetConnection()) {
-                val response = characterRepository.getCharacters(QUERY_PAGE_SIZE, TIMESTAMP, API_KEY, hash())
+                val response = characterRepository.getCharacters()
                 characterList.postValue(handleCharacterListResponse(response))
             } else {
                 characterList.postValue(Resource.Error("No internet connection"))

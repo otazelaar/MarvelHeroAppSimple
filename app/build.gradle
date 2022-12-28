@@ -120,4 +120,8 @@ dependencies {
     // Splash Screen
     def splash = "1.0.0"
     implementation "androidx.core:core-splashscreen:$splash"
+
+    // Paging
+    def paging_version = "3.1.1"
+    implementation "androidx.paging:paging-runtime:$paging_version"
 }
