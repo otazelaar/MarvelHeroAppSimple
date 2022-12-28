@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.otaz.marvelheroappsimple.api.Marvel
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
+import com.otaz.marvelheroappsimple.data.source.CharacterRemoteDataSource
 import com.otaz.marvelheroappsimple.db.CharacterDao
 import com.otaz.marvelheroappsimple.db.CharacterDatabase
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_BASE_URL
@@ -31,9 +32,19 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(
-        db: CharacterDatabase,
+        apiClient: Marvel,
+        characterDao: CharacterDao,
+        dataSource: CharacterRemoteDataSource,
     ): CharacterRepository {
-        return CharacterRepository(db)
+        return CharacterRepository(apiClient, characterDao, dataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDataSource(
+        apiClient: Marvel
+    ): CharacterRemoteDataSource {
+        return CharacterRemoteDataSource(apiClient)
     }
 
     @Singleton

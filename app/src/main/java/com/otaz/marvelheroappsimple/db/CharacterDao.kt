@@ -3,6 +3,7 @@ package com.otaz.marvelheroappsimple.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDao {
