@@ -10,6 +10,10 @@ import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.otaz.marvelheroappsimple.data.models.JsonCharComRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterRequest
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
@@ -21,6 +25,7 @@ import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
 import com.otaz.marvelheroappsimple.utils.constants.Companion.TIMESTAMP
 import com.otaz.marvelheroappsimple.utils.constants.Companion.hash
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import okio.IOException
 import retrofit2.Response
@@ -46,7 +51,7 @@ class CharacterViewModel @Inject constructor(
         getCharacters()
     }
 
-    fun getCharacters() = viewModelScope.launch {
+    private fun getCharacters() = viewModelScope.launch {
         safeCharactersCall()
     }
 

@@ -2,6 +2,7 @@ package com.otaz.marvelheroappsimple.data.source
 
 import com.otaz.marvelheroappsimple.api.Marvel
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterRequest
+import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import retrofit2.Response
 import javax.inject.Inject
 

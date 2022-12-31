@@ -1,10 +1,9 @@
 package com.otaz.marvelheroappsimple.adapters
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,17 +12,17 @@ import com.otaz.marvelheroappsimple.R
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 import kotlinx.android.synthetic.main.list_item_character.view.*
 
-class CharactersAdapter: RecyclerView.Adapter<CharactersAdapter.CharactersViewHolder>() {
+class CharactersAdapter: PagingDataAdapter<JsonCharacterResults, CharactersAdapter.CharactersViewHolder>(differCallback) {
 
     inner class CharactersViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
-    private val differCallback = object : DiffUtil.ItemCallback<JsonCharacterResults>() {
-        override fun areItemsTheSame(oldItem: JsonCharacterResults, newItem: JsonCharacterResults): Boolean {
-            return oldItem.id == newItem.id
-        }
+    companion object {
+        private val differCallback = object : DiffUtil.ItemCallback<JsonCharacterResults>() {
+            override fun areItemsTheSame(oldItem: JsonCharacterResults, newItem: JsonCharacterResults): Boolean =
+                oldItem.id == newItem.id
 
-        override fun areContentsTheSame(oldItem: JsonCharacterResults, newItem: JsonCharacterResults): Boolean {
-            return oldItem == newItem
+            override fun areContentsTheSame(oldItem: JsonCharacterResults, newItem: JsonCharacterResults): Boolean =
+                oldItem == newItem
         }
     }
 

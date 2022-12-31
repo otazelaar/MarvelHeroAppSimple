@@ -2,6 +2,7 @@ package com.otaz.marvelheroappsimple.data.repository
 
 import com.otaz.marvelheroappsimple.api.Marvel
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
+import com.otaz.marvelheroappsimple.data.source.CharacterPagingSource
 import com.otaz.marvelheroappsimple.data.source.CharacterRemoteDataSource
 import com.otaz.marvelheroappsimple.db.CharacterDao
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
@@ -18,6 +19,9 @@ class CharacterRepository(
     // The goal would be to later bring all suspend functions over to DataSources that will be consumed byt the repository
     suspend fun getCharacters() =
         dataSource.getCharacters(limit = QUERY_PAGE_SIZE, ts = TIMESTAMP, apikey = API_KEY, hash = hash())
+
+    // Paging
+    fun characterPagingSource() = CharacterPagingSource()
 
     // Not sure how to being the searchCharacters suspend function over to the CharacterRemoteDataSource because
     // it requires data "nameStartsWith" from the user. Not sure how to implement this yet...

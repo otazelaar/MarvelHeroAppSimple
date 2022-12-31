@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.otaz.marvelheroappsimple.api.Marvel
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
+import com.otaz.marvelheroappsimple.data.source.CharacterPagingSource
 import com.otaz.marvelheroappsimple.data.source.CharacterRemoteDataSource
 import com.otaz.marvelheroappsimple.db.CharacterDao
 import com.otaz.marvelheroappsimple.db.CharacterDatabase
