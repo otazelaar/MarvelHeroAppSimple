@@ -2,10 +2,8 @@ package com.otaz.marvelheroappsimple.di
 
 import android.content.Context
 import androidx.room.Room
-import com.otaz.marvelheroappsimple.api.Marvel
+import com.otaz.marvelheroappsimple.api.ApiService
 import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
-import com.otaz.marvelheroappsimple.db.CharacterDao
-import com.otaz.marvelheroappsimple.db.CharacterDatabase
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -31,14 +29,14 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRepository(
-        db: CharacterDatabase,
+        apiService: ApiService
     ): CharacterRepository {
-        return CharacterRepository(db)
+        return CharacterRepository(apiService)
     }
 
     @Singleton
     @Provides
-    fun provideApiClient(): Marvel {
+    fun provideApiClient(): ApiService {
         val client = OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100, TimeUnit.SECONDS).build();
@@ -46,23 +44,7 @@ object AppModule {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(Marvel::class.java)
+            .create(ApiService::class.java)
     }
 
-    @Singleton
-    @Provides
-    fun provideDatabase(@ApplicationContext context: Context): CharacterDatabase {
-        return Room.databaseBuilder(
-            context,
-            CharacterDatabase::class.java,
-            CharacterDatabase.DB_NAME)
-            .fallbackToDestructiveMigration()
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideCharacterDao(db: CharacterDatabase): CharacterDao {
-        return db.getCharacterDao()
-    }
 }

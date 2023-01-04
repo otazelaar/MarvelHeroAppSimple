@@ -1,32 +1,37 @@
 package com.otaz.marvelheroappsimple.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.adapters.CharactersAdapter
+import com.otaz.marvelheroappsimple.adapters.MoviesAdapter
+import com.otaz.marvelheroappsimple.api.ApiService
 import com.otaz.marvelheroappsimple.utils.Resource
-import com.otaz.marvelheroappsimple.utils.constants.Companion.QUERY_PAGE_SIZE
+import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.vm.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.android.synthetic.main.list_item_character.*
 import kotlinx.android.synthetic.main.list_item_character.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
-    private lateinit var charactersAdapter: CharactersAdapter
+    private lateinit var moviesAdapter: MoviesAdapter
     private val viewModel: CharacterViewModel by viewModels()
+
+    @Inject
+    lateinit var apiService: ApiService
 
     val TAG = "CharacterListFragment"
 
@@ -34,22 +39,20 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
 
-        charactersAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("charID", it)
-            }
-            findNavController().navigate(
-                R.id.action_characterListFragment_to_characterDetailFragment,
-                bundle
+        CoroutineScope(Dispatchers.IO).launch {
+            val service = apiService
+            val response = service.getMostPopularMovies(
+                apikey = API_KEY
             )
+            Log.d("CharacterListFragment", "onViewCreate $response")
         }
 
         viewModel.characterList.observe(viewLifecycleOwner, Observer { response ->
             when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
-                    response.data?.let { jsonCharacterRequest ->
-                        charactersAdapter.differ.submitList(jsonCharacterRequest.data?.results?.toList())
+                    response.data?.let { Movie ->
+                        moviesAdapter.differ.submitList(Movie.items)
                     }
                 }
                 is Resource.Error -> {
@@ -78,9 +81,9 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
     var isLoading = false
 
     private fun setUpRecyclerView() {
-        charactersAdapter = CharactersAdapter()
+        moviesAdapter = MoviesAdapter()
         rvCharacterList.apply {
-            adapter = charactersAdapter
+            adapter = moviesAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
