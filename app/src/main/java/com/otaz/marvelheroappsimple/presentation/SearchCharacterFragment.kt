@@ -62,7 +62,7 @@ class SearchCharacterFragment : Fragment(R.layout.fragment_search_character) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { jsonCharacterRequest ->
-                        charactersAdapter.differ.submitList(jsonCharacterRequest.data.results.toList())
+                        charactersAdapter.differ.submitList(jsonCharacterRequest.data?.results?.toList())
                         val totalPages = (jsonCharacterRequest.total?.div(constants.QUERY_PAGE_SIZE))?: + 2
                         isLastPage = viewModel.searchCharactersPage == totalPages
                         if(isLastPage) {

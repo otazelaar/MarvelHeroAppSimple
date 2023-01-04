@@ -7,8 +7,15 @@ import com.otaz.marvelheroappsimple.di.AppModule
 class CharacterRepository(
     private val db: CharacterDatabase
 ) {
+
+    // Playing with flows
     suspend fun getCharacters(limit: Int, ts: String, apikey: String, hash: String) =
         AppModule.provideApiClient().getCharacters(limit, ts, apikey, hash)
+
+
+
+
+
 
     suspend fun searchCharacters(nameStartsWith: String, limit: Int, ts: String, apikey: String, hash: String) =
         AppModule.provideApiClient().searchForCharacters(nameStartsWith, limit, ts, apikey, hash)

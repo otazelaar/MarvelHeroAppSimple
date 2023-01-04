@@ -23,16 +23,16 @@ import kotlinx.coroutines.launch
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     private val viewModel: CharacterViewModel by viewModels()
-    lateinit var comicsAdapter: ComicsAdapter
-    val TAG = "CharacterDetailFragment"
-    val args: CharacterDetailFragmentArgs by navArgs()
+    private lateinit var comicsAdapter: ComicsAdapter
+    private val TAG = "CharacterDetailFragment"
+    private val args: CharacterDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
 
         val charID = args.charID
-        val characterImagePath = args.charID.thumbnail.path
+        val characterImagePath = args.charID.thumbnail?.path
 
         tvCharacterTitleText.text = charID.name
         tvCharacterDescription.text = charID.description
@@ -46,7 +46,7 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
         }
 
         lifecycleScope.launch {
-            viewModel.getComicsByID(charID.id)
+            charID.id?.let { viewModel.getComicsByID(it) }
         }
 
         viewModel.comicsByID.observe(viewLifecycleOwner, Observer { response ->

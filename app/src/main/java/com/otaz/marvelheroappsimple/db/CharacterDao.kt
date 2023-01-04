@@ -1,6 +1,7 @@
 package com.otaz.marvelheroappsimple.db
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.otaz.marvelheroappsimple.data.models.JsonCharacterResults
 

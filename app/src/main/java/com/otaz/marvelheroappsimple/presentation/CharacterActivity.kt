@@ -11,6 +11,7 @@ import com.otaz.marvelheroappsimple.di.BaseApplication
 import com.otaz.marvelheroappsimple.vm.SplashScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.character_main.*
+import kotlinx.android.synthetic.main.fragment_character_list.*
 import javax.inject.Inject
 
 @AndroidEntryPoint

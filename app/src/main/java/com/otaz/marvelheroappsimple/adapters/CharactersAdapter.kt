@@ -41,10 +41,10 @@ class CharactersAdapter: RecyclerView.Adapter<CharactersAdapter.CharactersViewHo
         val characters = differ.currentList[position]
         holder.itemView.apply {
             tvCharacterName.text = characters.name
-            val numberOfComics = characters.comics.available.toString()
+            val numberOfComics = characters.comics?.available.toString()
             tvCharacterNumberOfComics.text = "Number of comics: ${numberOfComics}"
 
-            val characterImageLink = "${characters.thumbnail.path}/standard_amazing.jpg"
+            val characterImageLink = "${characters.thumbnail?.path}/standard_amazing.jpg"
             Glide.with(this).load(characterImageLink.toHttpsPrefix()).into(ivCharacterImage)
 
             setOnClickListener{

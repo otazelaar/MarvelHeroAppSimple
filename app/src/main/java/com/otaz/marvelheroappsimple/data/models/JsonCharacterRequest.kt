@@ -5,12 +5,12 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 data class JsonCharacterRequest(
-    val `data`: JsonCharacterData,
-    val total: Int?,
+    val `data`: JsonCharacterData? = null,
+    val total: Int? = null,
 )
 
 data class JsonCharacterData(
-    val results: MutableList<JsonCharacterResults>,
+    val results: MutableList<JsonCharacterResults>? = null,
 )
 
 @Entity(
@@ -18,20 +18,20 @@ data class JsonCharacterData(
 )
 data class JsonCharacterResults(
     @PrimaryKey
-    val id: Int,
-    val name: String?,
-    val description: String?,
-    val thumbnail: Thumbnail,
-    val comics: Comics,
+    val id: Int? = null,
+    val name: String? = null,
+    val description: String? = null,
+    val thumbnail: Thumbnail? = null,
+    val comics: Comics? = null,
 ) : Serializable
 
 data class Thumbnail(
-    val extension: String,
-    val path: String
+    val extension: String? = null,
+    val path: String? = null,
 )
 
 data class Comics(
-    val available: Int,
-    val collectionURI: String,
-    val returned: Int
+    val available: Int? = null,
+    val collectionURI: String? = null,
+    val returned: Int? = null,
 )

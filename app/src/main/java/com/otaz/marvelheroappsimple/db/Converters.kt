@@ -8,7 +8,7 @@ class Converters {
 
     // Converters for Thumbnail
     @TypeConverter
-    fun fromThumbnail(thumbnail: Thumbnail) : String {
+    fun fromThumbnail(thumbnail: Thumbnail) : String? {
         return thumbnail.path
     }
 
@@ -19,7 +19,7 @@ class Converters {
 
     // Converters for Comics
     @TypeConverter
-    fun fromComics(comics: Comics) : Int {
+    fun fromComics(comics: Comics) : Int? {
         return comics.available
     }
 
