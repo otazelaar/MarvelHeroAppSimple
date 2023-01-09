@@ -1,9 +1,7 @@
 package com.otaz.marvelheroappsimple.di
 
 import android.content.Context
-import androidx.room.Room
-import com.otaz.marvelheroappsimple.api.ApiService
-import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
+import com.otaz.marvelheroappsimple.network.MovieService
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -28,15 +26,21 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(
-        apiService: ApiService
-    ): CharacterRepository {
-        return CharacterRepository(apiService)
+    fun provideRandomString(): String{
+        return "Hey Look a random string!!!!!JGKDJL"
     }
+
+//    @Singleton
+//    @Provides
+//    fun provideRepository(
+//        apiService: ApiService
+//    ): CharacterRepository {
+//        return CharacterRepository(apiService)
+//    }
 
     @Singleton
     @Provides
-    fun provideApiClient(): ApiService {
+    fun provideApiClient(): MovieService {
         val client = OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100, TimeUnit.SECONDS).build();
@@ -44,7 +48,7 @@ object AppModule {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ApiService::class.java)
+            .create(MovieService::class.java)
     }
 
 }

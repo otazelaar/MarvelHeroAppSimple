@@ -2,44 +2,58 @@ package com.otaz.marvelheroappsimple.presentation
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
-import com.otaz.marvelheroappsimple.R
-import com.otaz.marvelheroappsimple.data.repository.CharacterRepository
 import com.otaz.marvelheroappsimple.di.BaseApplication
-import com.otaz.marvelheroappsimple.vm.CharacterViewModel
+import com.otaz.marvelheroappsimple.network.MovieService
+import com.otaz.marvelheroappsimple.utils.constants.Companion.API_KEY
 import com.otaz.marvelheroappsimple.vm.SplashScreenViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.character_main.*
-import kotlinx.android.synthetic.main.fragment_character_list.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class CharacterActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var app: BaseApplication
     private val viewModel: SplashScreenViewModel by viewModels()
 
+    @Inject
+    lateinit var movieService: MovieService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setContent {
+            Image(
+                painter = painterResource(id = com.otaz.marvelheroappsimple.R.drawable.ic_character_image),
+                modifier = Modifier,
+                alignment = Alignment.Center,
+            )
+        }
+
+
         installSplashScreen().apply {
             setKeepOnScreenCondition() {
                 viewModel.isLoading.value
             }
         }
 
-        setContentView(R.layout.character_main)
-
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.characterNavHostFragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        bottomNavigationView.setupWithNavController(navController)
+        CoroutineScope(IO).launch {
+            val movie = movieService.get(
+                apikey = API_KEY,
+                id = "tt8946378"
+            )
+            Log.d("MainActivity", "onCreate ${movie.fullTitle}")
+        }
     }
 }

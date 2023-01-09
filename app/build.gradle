@@ -37,10 +37,20 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
         freeCompilerArgs += [
                 "-Xjvm-default=all",
         ]
+    }
+    composeOptions {
+        def kotlin_compiler_version = "1.7.2"
+        kotlinCompilerVersion kotlin_compiler_version
+
+        def kotlin_compiler_extension_version = "1.3.2"
+        kotlinCompilerExtensionVersion kotlin_compiler_extension_version
+    }
+    buildFeatures {
+        compose true
     }
 }
 
@@ -53,10 +63,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
-    // Implementation used to attempt to share data between fragments so that character ID can be used to make API call for chosen character
-    def fragmentDataSharing = "1.5.4"
-    implementation "androidx.fragment:fragment-ktx:$fragmentDataSharing"
-
     // Navigation
     def nav_version = "2.5.3"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
@@ -64,6 +70,27 @@ dependencies {
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    def compose = "1.0.0-alpha08"
+    implementation "androidx.compose.ui:ui:$compose"
+    implementation "androidx.compose.foundation:foundation:$compose"
+    implementation "androidx.compose.runtime:runtime-livedata:$compose"
+    implementation "androidx.compose.runtime:runtime-rxjava2:$compose"
+    implementation "androidx.compose.material:material:$compose"
+    implementation "androidx.compose.material:material-icons-core:$compose"
+    implementation "androidx.compose.material:material-icons-extended:$compose"
+
+    // Optional - Integration with activities
+    implementation 'androidx.activity:activity-compose:1.0.0-alpha08'
+    // Optional - Integration with ViewModels
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1'
+
+    // Android Studio Preview support
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+
+    implementation "androidx.ui:ui-framework:0.1.0-dev03"
+
 
     // Retrofit
     def retrofit = "2.9.0"
