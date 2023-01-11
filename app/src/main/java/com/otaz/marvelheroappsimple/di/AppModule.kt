@@ -2,6 +2,7 @@ package com.otaz.marvelheroappsimple.di
 
 import android.content.Context
 import com.otaz.marvelheroappsimple.network.MovieService
+import com.otaz.marvelheroappsimple.repository.MovieRepository
 import com.otaz.marvelheroappsimple.utils.constants.Companion.API_BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -23,20 +24,6 @@ object AppModule {
     fun provideApplication(@ApplicationContext app: Context): BaseApplication {
         return app as BaseApplication
     }
-
-    @Singleton
-    @Provides
-    fun provideRandomString(): String{
-        return "Hey Look a random string!!!!!JGKDJL"
-    }
-
-//    @Singleton
-//    @Provides
-//    fun provideRepository(
-//        apiService: ApiService
-//    ): CharacterRepository {
-//        return CharacterRepository(apiService)
-//    }
 
     @Singleton
     @Provides
